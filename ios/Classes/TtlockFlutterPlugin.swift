@@ -4,6 +4,7 @@ import TTLockSDK
 
 public final class TtlockFlutterPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
+      TTLock.isPrintLog = true
     let context = EventContextStore.shared
 
     let lockApi = LockHostApiImpl(context: context)

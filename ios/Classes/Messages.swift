@@ -654,201 +654,234 @@ enum TTAliasType: Int {
   case qrCode = 6
 }
 
-/// 锁功能能力位。
+/// 锁功能特性（按原生 featureValue bit id 升序排列；注释中的 id 即 bit 位）。
 enum TTLockFunction: Int {
-  /// 密码。
+  /// id: 0 — 密码。
   case passcode = 0
-  /// IC 卡。
+  /// id: 1 — IC 卡。
   case icCard = 1
-  /// 指纹。
+  /// id: 2 — 指纹。
   case fingerprint = 2
-  /// 手环。
+  /// id: 3 — 手环。
   case wristband = 3
-  /// 自动闭锁。
+  /// id: 4 — 自动闭锁。
   case autoLock = 4
-  /// 删除密码。
+  /// id: 5 — 删除密码。
   case deletePasscode = 5
-  /// 管理密码。
-  case managePasscode = 6
-  /// 锁定。
-  case locking = 7
-  /// 密码可见。
-  case passcodeVisible = 8
-  /// 网关开锁。
-  case gatewayUnlock = 9
-  /// 锁冻结。
-  case lockFreeze = 10
-  /// 周期密码。
-  case cyclePassword = 11
-  /// 开锁开关。
-  case unlockSwitch = 12
-  /// 声音开关。
-  case audioSwitch = 13
-  /// NB-IoT。
-  case nbIoT = 14
-  /// 获取管理员密码。
-  case getAdminPasscode = 15
-  /// 酒店卡。
-  case hotelCard = 16
-  /// 无时钟。
-  case noClock = 17
-  /// 正常模式不广播。
-  case noBroadcastInNormal = 18
-  /// 通行模式。
-  case passageMode = 19
-  /// 关闭自动闭锁。
-  case turnOffAutoLock = 20
-  /// 无线键盘。
-  case wirelessKeypad = 21
-  /// 灯光。
-  case light = 22
-  /// 酒店卡黑名单。
-  case hotelCardBlacklist = 23
-  /// 身份证。
-  case identityCard = 24
-  /// 防撬警报。
-  case tamperAlert = 25
-  /// 重置按钮。
-  case resetButton = 26
-  /// 隐私锁。
-  case privacyLock = 27
-  /// 死锁。
-  case deadLock = 28
-  /// 周期卡或指纹。
-  case cyclicCardOrFingerprint = 29
-  /// 指静脉。
-  case fingerVein = 30
-  /// BLE 5.0。
-  case ble5G = 31
-  /// NB 唤醒。
-  case nbAwake = 32
-  /// 恢复周期密码。
-  case recoverCyclePasscode = 33
-  /// 遥控钥匙。
-  case remoteKey = 34
-  /// 获取配件电量。
-  case getAccessoryElectricQuantity = 35
-  /// 音量和语言设置。
-  case soundVolumeAndLanguageSetting = 36
-  /// 二维码。
-  case qrCode = 37
-  /// 门磁状态。
-  case doorSensorState = 38
-  /// 通行模式自动开锁设置。
-  case passageModeAutoUnlockSetting = 39
-  /// 门磁。
-  case doorSensor = 40
-  /// 门磁警报。
-  case doorSensorAlert = 41
-  /// 灵敏度。
-  case sensitivity = 42
-  /// 人脸。
-  case face = 43
-  /// CPU 卡。
-  case cpuCard = 44
-  /// WiFi 锁。
-  case wifiLock = 45
-  /// WiFi 锁静态 IP。
-  case wifiLockStaticIP = 46
-  /// 密码按键数量。
-  case passcodeKeyNumber = 47
-  /// 独立激活。
-  case standAloneActivation = 48
-  /// 双重认证。
-  case doubleAuth = 49
-  /// 授权开锁。
-  case authorizedUnlock = 50
-  /// 网关授权开锁。
-  case gatewayAuthorizedUnlock = 51
-  /// 无电子钥匙开锁。
-  case noEkeyUnlock = 52
-  /// 指安拍照人脸。
-  case zhiAnPhotoFace = 53
-  /// 掌静脉。
-  case palmVein = 54
-  /// WiFi 区域。
-  case wifiArea = 55
-  /// 小草摄像头。
-  case xiaoCaoCamera = 56
-  /// 通过编码重置锁。
-  case resetLockByCode = 57
-  /// 第三方蓝牙设备。
-  case thirdPartyBluetoothDevice = 58
-  /// 自动设置角度。
-  case autoSetAngle = 59
-  /// 手动设置角度。
-  case manualSetAngle = 60
-  /// 控制斜舌。
-  case controlLatchBolt = 61
-  /// 自动设置开锁方向。
-  case autoSetUnlockDirection = 62
-  /// IC 卡安全设置。
-  case icCardSecuritySetting = 63
-  /// WiFi 省电时间。
-  case wifiPowerSavingTime = 64
-  /// 多功能键盘。
-  case multiFunctionKeypad = 65
-  /// 不支持关闭斜舌。
-  case doNotSupportTurnOffLatchBolt = 66
-  /// 公共模式。
-  case publicMode = 67
-  /// 低电量自动开锁。
-  case lowBatteryAutoUnlock = 68
-  /// 电机驱动时间。
-  case motorDriveTime = 69
-  /// 修改特征值。
-  case modifyFeatureValue = 70
-  /// 修改锁名前缀。
-  case modifyLockNamePrefix = 71
-  /// 授权码。
-  case authCode = 72
-  /// 未授权尝试警报。
-  case unauthorizedAttemptAlarm = 73
-  /// 省电模式支持 WiFi。
-  case powerSaverSupportWifi = 74
-  /// 蓝牙广播设置。
-  case bluetoothAdvertisingSetting = 75
-  /// 工作模式。
-  case workingMode = 76
-  /// 供应商代码。
-  case supplierCode = 77
-  /// Cat.1。
-  case catOne = 78
-  /// 强制开门警报。
-  case forcedOpeningDoorAlarm = 79
-  /// 指安人脸特征第二代。
-  case zhiAnFaceFeatureSecondGeneration = 80
-  /// 支持死锁。
-  case supportDeadLocking = 81
-  /// 工作时间。
-  case workingTime = 82
-  /// 自定义二维码。
-  case customQRCode = 83
-  /// 安全 M1 卡。
-  case securityM1Card = 84
-  /// 易盛人脸。
-  case yiShengPhotoFace = 85
-  /// 图片人脸传输。
-  case pictureFaceDelivery = 86
-  /// 支持设置别名。
-  case supportSetAlias = 87
-  /// 隐藏 WiFi/Cat.1 休眠模式设置。
-  case hideWifiCatOneSleepModeSetting = 88
-  /// 半自动模式控制。
-  case semiAutomaticModeControl = 89
-  /// 支持设置用户属性。
-  case supportSetUserAttributes = 90
-  /// 支持监管。
-  case supportSupervision = 91
-  /// 易诺拍照人脸。
-  case yiNuoPhotoFace = 92
-  /// 通过 URL 添加人脸。
-  case urlFace = 93
-  /// 人体存在传感器。
-  case humanPresenceSensor = 94
-  /// 左右开门方向设置（cloud featureValue bit 36 / FeatureValue.UNLOCK_DIRECTION）。
-  /// 与 [autoSetUnlockDirection]（自动校准）不同。
-  case unlockDirection = 95
+  /// id: 6 — 固件设置。
+  case firmwareSetting = 6
+  /// id: 7 — 管理密码。
+  case managePasscode = 7
+  /// id: 8 — 锁定。
+  case locking = 8
+  /// id: 9 — 密码可见。
+  case passcodeVisible = 9
+  /// id: 10 — 网关开锁。
+  case gatewayUnlock = 10
+  /// id: 11 — 锁冻结。
+  case lockFreeze = 11
+  /// id: 12 — 周期密码。
+  case cyclePassword = 12
+  /// id: 13 — 磁力计。
+  case magnetometer = 13
+  /// id: 14 — 远程开锁开关。
+  case unlockSwitch = 14
+  /// id: 15 — 声音开关。
+  case audioSwitch = 15
+  /// id: 16 — NB-IoT。
+  case nbIoT = 16
+  /// id: 18 — 获取管理员密码。
+  case getAdminPasscode = 17
+  /// id: 19 — 酒店卡。
+  case hotelCard = 18
+  /// id: 20 — 无时钟。
+  case noClock = 19
+  /// id: 21 — 正常模式不广播。
+  case noBroadcastInNormal = 20
+  /// id: 22 — 通行模式。
+  case passageMode = 21
+  /// id: 23 — 关闭自动闭锁。
+  case turnOffAutoLock = 22
+  /// id: 24 — 无线键盘。
+  case wirelessKeypad = 23
+  /// id: 25 — 灯光。
+  case light = 24
+  /// id: 26 — 酒店卡黑名单。
+  case hotelCardBlacklist = 25
+  /// id: 27 — 身份证。
+  case identityCard = 26
+  /// id: 28 — 防撬警报。
+  case tamperAlert = 27
+  /// id: 29 — 重置按钮。
+  case resetButton = 28
+  /// id: 30 — 隐私锁。
+  case privacyLock = 29
+  /// id: 32 — 死锁。
+  case deadLock = 30
+  /// id: 34 — 周期卡或指纹。
+  case cyclicCardOrFingerprint = 31
+  /// id: 36 — 左右开门方向设置（与 [autoSetUnlockDirection] 不同）。
+  case unlockDirection = 32
+  /// id: 37 — 指静脉。
+  case fingerVein = 33
+  /// id: 38 — BLE 5.0 / Telink。
+  case ble5G = 34
+  /// id: 39 — NB 唤醒。
+  case nbAwake = 35
+  /// id: 40 — 恢复周期密码。
+  case recoverCyclePasscode = 36
+  /// id: 41 — 遥控钥匙。
+  case remoteKey = 37
+  /// id: 42 — 获取配件电量。
+  case getAccessoryElectricQuantity = 38
+  /// id: 43 — 音量和语言设置。
+  case soundVolumeAndLanguageSetting = 39
+  /// id: 44 — 二维码。
+  case qrCode = 40
+  /// id: 45 — 门磁状态。
+  case doorSensorState = 41
+  /// id: 46 — 通行模式自动开锁设置。
+  case passageModeAutoUnlockSetting = 42
+  /// id: 47 — 指纹下发。
+  case fingerprintDistribution = 43
+  /// id: 48 — 中正。
+  case zhongZheng = 44
+  /// id: 49 — 群晖。
+  case syno = 45
+  /// id: 50 — 无线门磁。
+  case doorSensor = 46
+  /// id: 51 — 门磁警报。
+  case doorSensorAlert = 47
+  /// id: 52 — 灵敏度。
+  case sensitivity = 48
+  /// id: 53 — 人脸。
+  case face = 49
+  /// id: 54 — 电机扭力设置。
+  case motorTorque = 50
+  /// id: 55 — CPU 卡。
+  case cpuCard = 51
+  /// id: 56 — WiFi 锁。
+  case wifiLock = 52
+  /// id: 58 — WiFi 锁静态 IP。
+  case wifiLockStaticIP = 53
+  /// id: 60 — 密码按键数量。
+  case passcodeKeyNumber = 54
+  /// id: 61 — 觅睿可视对讲。
+  case meariCamera = 55
+  /// id: 62 — 独立激活。
+  case standAloneActivation = 56
+  /// id: 63 — 双重认证。
+  case doubleAuth = 57
+  /// id: 64 — 授权开锁。
+  case authorizedUnlock = 58
+  /// id: 65 — 网关授权开锁。
+  case gatewayAuthorizedUnlock = 59
+  /// id: 66 — 无电子钥匙开锁。
+  case noEkeyUnlock = 60
+  /// id: 67 — 雄迈可视对讲。
+  case xiongMaiCamera = 61
+  /// id: 68 — 昂瑞微芯片。
+  case onMicroChip = 62
+  /// id: 69 — 指安拍照人脸。
+  case zhiAnPhotoFace = 63
+  /// id: 70 — 掌静脉。
+  case palmVein = 64
+  /// id: 71 — WiFi 区域。
+  case wifiArea = 65
+  /// id: 75 — 小草摄像头。
+  case xiaoCaoCamera = 66
+  /// id: 76 — 通过编码重置锁。
+  case resetLockByCode = 67
+  /// id: 77 — 第三方蓝牙设备。
+  case thirdPartyBluetoothDevice = 68
+  /// id: 78 — 自动设置角度。
+  case autoSetAngle = 69
+  /// id: 79 — 手动设置角度。
+  case manualSetAngle = 70
+  /// id: 80 — 控制斜舌。
+  case controlLatchBolt = 71
+  /// id: 81 — 自动设置开锁方向。
+  case autoSetUnlockDirection = 72
+  /// id: 82 — IC 卡安全设置。
+  case icCardSecuritySetting = 73
+  /// id: 83 — WiFi 省电时间。
+  case wifiPowerSavingTime = 74
+  /// id: 84 — 多功能键盘。
+  case multiFunctionKeypad = 75
+  /// id: 85 — 不支持关闭斜舌 / 全自动。
+  case doNotSupportTurnOffLatchBolt = 76
+  /// id: 86 — 公共模式。
+  case publicMode = 77
+  /// id: 87 — 低电量自动开锁。
+  case lowBatteryAutoUnlock = 78
+  /// id: 88 — 电机驱动时间。
+  case motorDriveTime = 79
+  /// id: 89 — 修改特征值。
+  case modifyFeatureValue = 80
+  /// id: 90 — 修改锁名前缀。
+  case modifyLockNamePrefix = 81
+  /// id: 91 — 密码开反锁。
+  case passcodeWithOpenPrivacyLock = 82
+  /// id: 92 — 授权码。
+  case authCode = 83
+  /// id: 93 — 未授权尝试警报。
+  case unauthorizedAttemptAlarm = 84
+  /// id: 94 — 关联锁。
+  case linkLock = 85
+  /// id: 95 — 清空密码与动态密码设置。
+  case clearPasscodeAndDynamicPasscodeSetting = 86
+  /// id: 96 — 省电模式支持 WiFi。
+  case powerSaverSupportWifi = 87
+  /// id: 97 — 蓝牙广播设置。
+  case bluetoothAdvertisingSetting = 88
+  /// id: 98 — 工作模式。
+  case workingMode = 89
+  /// id: 99 — 供应商代码。
+  case supplierCode = 90
+  /// id: 100 — Cat.1。
+  case catOne = 91
+  /// id: 102 — 强制开门警报。
+  case forcedOpeningDoorAlarm = 92
+  /// id: 103 — 指安人脸特征第二代。
+  case zhiAnFaceFeatureSecondGeneration = 93
+  /// id: 104 — WiFi 固件版本。
+  case wifiFirmwareVersion = 94
+  /// id: 106 — 支持死锁。
+  case supportDeadLocking = 95
+  /// id: 107 — 工作时间。
+  case workingTime = 96
+  /// id: 108 — 自定义二维码。
+  case customQRCode = 97
+  /// id: 109 — 安全 M1 卡。
+  case securityM1Card = 98
+  /// id: 110 — 易盛人脸。
+  case yiShengPhotoFace = 99
+  /// id: 112 — 图片人脸传输。
+  case pictureFaceDelivery = 100
+  /// id: 112 — 易诺拍照人脸（与 [pictureFaceDelivery] 同 bit）。
+  case yiNuoPhotoFace = 101
+  /// id: 114 — 支持设置别名。
+  case supportSetAlias = 102
+  /// id: 117 — 隐藏 WiFi/Cat.1 休眠模式设置。
+  case hideWifiCatOneSleepModeSetting = 103
+  /// id: 119 — 半自动模式控制。
+  case semiAutomaticModeControl = 104
+  /// id: 120 — 支持设置用户属性。
+  case supportSetUserAttributes = 105
+  /// id: 122 — 电机驱动板固件版本。
+  case motorDriveBoardFirmwareVersion = 106
+  /// id: 123 — 通过 URL 添加指纹。
+  case urlFinger = 107
+  /// id: 124 — 通过 URL 添加人脸。
+  case urlFace = 108
+  /// id: 125 — 通过 URL 添加掌静脉。
+  case urlPalmVein = 109
+  /// id: 126 — 支持监管。
+  case supportSupervision = 110
+  /// id: 128 — 人体存在传感器。
+  case humanPresenceSensor = 111
+  /// id: 132 — 人脸模组数据类型。
+  case faceFeatureDataType = 112
 }
 
 /// 人脸录入状态。
@@ -2527,6 +2560,10 @@ struct TTStandaloneDoorSensorInfo: Hashable {
 
 /// 水电表扫描结果（通用）。
 ///
+/// 字段对齐 iOS `TTWaterMeterModel` / `TTElectricMeterModel` 与 Android
+/// `WaterMeter` / `ElectricMeter` 中添加流程所需的公共扫描属性。
+/// `type == 1` 时广播中才带有开关/付费/用量等运行态字段，不在此模型中暴露。
+///
 /// Generated class from Pigeon that represents data sent in messages.
 struct TTMeterScanModel: Hashable {
   /// 设备名称。
@@ -2535,6 +2572,12 @@ struct TTMeterScanModel: Hashable {
   var mac: String
   /// 蓝牙信号强度。
   var rssi: Int64
+  /// 是否已初始化；未初始化才可执行添加。
+  var isInited: Bool
+  /// 广播类型（SDK `type`）。
+  var type: Int64
+  /// 扫描时间戳（毫秒）。
+  var scanTime: Int64? = nil
 
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
@@ -2542,11 +2585,17 @@ struct TTMeterScanModel: Hashable {
     let name = pigeonVar_list[0] as! String
     let mac = pigeonVar_list[1] as! String
     let rssi = pigeonVar_list[2] as! Int64
+    let isInited = pigeonVar_list[3] as! Bool
+    let type = pigeonVar_list[4] as! Int64
+    let scanTime: Int64? = nilOrValue(pigeonVar_list[5])
 
     return TTMeterScanModel(
       name: name,
       mac: mac,
-      rssi: rssi
+      rssi: rssi,
+      isInited: isInited,
+      type: type,
+      scanTime: scanTime
     )
   }
   func toList() -> [Any?] {
@@ -2554,13 +2603,16 @@ struct TTMeterScanModel: Hashable {
       name,
       mac,
       rssi,
+      isInited,
+      type,
+      scanTime,
     ]
   }
   static func == (lhs: TTMeterScanModel, rhs: TTMeterScanModel) -> Bool {
     if Swift.type(of: lhs) != Swift.type(of: rhs) {
       return false
     }
-    return deepEqualsMessages(lhs.name, rhs.name) && deepEqualsMessages(lhs.mac, rhs.mac) && deepEqualsMessages(lhs.rssi, rhs.rssi)
+    return deepEqualsMessages(lhs.name, rhs.name) && deepEqualsMessages(lhs.mac, rhs.mac) && deepEqualsMessages(lhs.rssi, rhs.rssi) && deepEqualsMessages(lhs.isInited, rhs.isInited) && deepEqualsMessages(lhs.type, rhs.type) && deepEqualsMessages(lhs.scanTime, rhs.scanTime)
   }
 
   func hash(into hasher: inout Hasher) {
@@ -2568,6 +2620,9 @@ struct TTMeterScanModel: Hashable {
     deepHashMessages(value: name, hasher: &hasher)
     deepHashMessages(value: mac, hasher: &hasher)
     deepHashMessages(value: rssi, hasher: &hasher)
+    deepHashMessages(value: isInited, hasher: &hasher)
+    deepHashMessages(value: type, hasher: &hasher)
+    deepHashMessages(value: scanTime, hasher: &hasher)
   }
 }
 
@@ -4115,11 +4170,12 @@ protocol TTLockHostApi {
   /// [torqueLevel] 扭矩等级。
   /// [lockData] 锁凭证。
   func setMotorTorqueLevel(torqueLevel: Int64, lockData: String, completion: @escaping (Result<Void, Error>) -> Void)
-  /// 设置锁斜舌保持时间。
+  /// 设置锁斜舌参数。
   ///
-  /// [keepTime] 斜舌保持时间（秒）。
+  /// [driveLevel] 斜舌回转距离/驱动等级。有效范围 1–20；0 表示不控制；-1 表示不修改。
+  /// [keepTime] 斜舌保持时间（秒）。有效范围 2–10；-1 表示不修改。
   /// [lockData] 锁凭证。
-  func setLockLatchBolt(keepTime: Int64, lockData: String, completion: @escaping (Result<Void, Error>) -> Void)
+  func setLockLatchBolt(driveLevel: Int64, keepTime: Int64, lockData: String, completion: @escaping (Result<Void, Error>) -> Void)
   /// 设置锁时间。
   ///
   /// [timestamp] 目标时间，毫秒时间戳。
@@ -4194,6 +4250,20 @@ protocol TTLockHostApi {
   /// [seconds] 灯光持续时间（秒）。
   /// [lockData] 锁凭证。
   func setLightTime(seconds: Int64, lockData: String, completion: @escaping (Result<Void, Error>) -> Void)
+  /// 获取蓝牙广播间隔。
+  ///
+  /// 需要能力位 [TTLockFunction.bluetoothAdvertisingSetting]。
+  /// 返回值单位为秒，有效范围约 0.1–1。
+  ///
+  /// [lockData] 锁凭证。
+  func getBluetoothAdvertisingInterval(lockData: String, completion: @escaping (Result<Double, Error>) -> Void)
+  /// 设置蓝牙广播间隔。
+  ///
+  /// 需要能力位 [TTLockFunction.bluetoothAdvertisingSetting]。
+  ///
+  /// [interval] 广播间隔（秒），有效范围约 0.1–1。
+  /// [lockData] 锁凭证。
+  func setBluetoothAdvertisingInterval(interval: Double, lockData: String, completion: @escaping (Result<Void, Error>) -> Void)
   /// 获取锁方向。
   ///
   /// [lockData] 锁凭证。
@@ -5486,17 +5556,19 @@ class TTLockHostApiSetup {
     } else {
       setMotorTorqueLevelChannel.setMessageHandler(nil)
     }
-    /// 设置锁斜舌保持时间。
+    /// 设置锁斜舌参数。
     ///
-    /// [keepTime] 斜舌保持时间（秒）。
+    /// [driveLevel] 斜舌回转距离/驱动等级。有效范围 1–20；0 表示不控制；-1 表示不修改。
+    /// [keepTime] 斜舌保持时间（秒）。有效范围 2–10；-1 表示不修改。
     /// [lockData] 锁凭证。
     let setLockLatchBoltChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.ttlock_flutter.TTLockHostApi.setLockLatchBolt\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       setLockLatchBoltChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let keepTimeArg = args[0] as! Int64
-        let lockDataArg = args[1] as! String
-        api.setLockLatchBolt(keepTime: keepTimeArg, lockData: lockDataArg) { result in
+        let driveLevelArg = args[0] as! Int64
+        let keepTimeArg = args[1] as! Int64
+        let lockDataArg = args[2] as! String
+        api.setLockLatchBolt(driveLevel: driveLevelArg, keepTime: keepTimeArg, lockData: lockDataArg) { result in
           switch result {
           case .success:
             reply(wrapResult(nil))
@@ -5831,6 +5903,53 @@ class TTLockHostApiSetup {
       }
     } else {
       setLightTimeChannel.setMessageHandler(nil)
+    }
+    /// 获取蓝牙广播间隔。
+    ///
+    /// 需要能力位 [TTLockFunction.bluetoothAdvertisingSetting]。
+    /// 返回值单位为秒，有效范围约 0.1–1。
+    ///
+    /// [lockData] 锁凭证。
+    let getBluetoothAdvertisingIntervalChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.ttlock_flutter.TTLockHostApi.getBluetoothAdvertisingInterval\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      getBluetoothAdvertisingIntervalChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let lockDataArg = args[0] as! String
+        api.getBluetoothAdvertisingInterval(lockData: lockDataArg) { result in
+          switch result {
+          case .success(let res):
+            reply(wrapResult(res))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      getBluetoothAdvertisingIntervalChannel.setMessageHandler(nil)
+    }
+    /// 设置蓝牙广播间隔。
+    ///
+    /// 需要能力位 [TTLockFunction.bluetoothAdvertisingSetting]。
+    ///
+    /// [interval] 广播间隔（秒），有效范围约 0.1–1。
+    /// [lockData] 锁凭证。
+    let setBluetoothAdvertisingIntervalChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.ttlock_flutter.TTLockHostApi.setBluetoothAdvertisingInterval\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      setBluetoothAdvertisingIntervalChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let intervalArg = args[0] as! Double
+        let lockDataArg = args[1] as! String
+        api.setBluetoothAdvertisingInterval(interval: intervalArg, lockData: lockDataArg) { result in
+          switch result {
+          case .success:
+            reply(wrapResult(nil))
+          case .failure(let error):
+            reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      setBluetoothAdvertisingIntervalChannel.setMessageHandler(nil)
     }
     /// 获取锁方向。
     ///

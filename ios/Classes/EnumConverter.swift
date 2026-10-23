@@ -218,197 +218,345 @@ func remoteAccessoryConvert(_ accessory: TTRemoteAccessory) -> TTLockSDK.TTAcces
 func featureValueConvert(_ lockFunction: TTLockFunction) -> TTLockFeatureValue? {
   switch lockFunction {
   case .passcode:
+    // id: 0
     return TTLockFeatureValue.passcode
   case .icCard:
+    // id: 1
     return TTLockFeatureValue.icCard
   case .fingerprint:
+    // id: 2
     return TTLockFeatureValue.fingerprint
   case .wristband:
+    // id: 3
     return TTLockFeatureValue.wristband
   case .autoLock:
+    // id: 4
     return TTLockFeatureValue.autoLock
   case .deletePasscode:
+    // id: 5
     return TTLockFeatureValue.deletePasscode
+  case .firmwareSetting:
+    // id: 6
+    return nil
   case .managePasscode:
+    // id: 7
     return TTLockFeatureValue.managePasscode
   case .locking:
+    // id: 8
     return TTLockFeatureValue.locking
   case .passcodeVisible:
+    // id: 9
     return TTLockFeatureValue.passcodeVisible
   case .gatewayUnlock:
+    // id: 10
     return TTLockFeatureValue.gatewayUnlock
   case .lockFreeze:
+    // id: 11
     return TTLockFeatureValue.lockFreeze
   case .cyclePassword:
+    // id: 12
     return TTLockFeatureValue.cyclePassword
+  case .magnetometer:
+    // id: 13
+    return nil
   case .unlockSwitch:
+    // id: 14
     return TTLockFeatureValue.remoteUnlockSwicth
   case .audioSwitch:
+    // id: 15
     return TTLockFeatureValue.audioSwitch
   case .nbIoT:
+    // id: 16
     return TTLockFeatureValue.nbIoT
   case .getAdminPasscode:
+    // id: 18
     return TTLockFeatureValue.getAdminPasscode
   case .hotelCard:
+    // id: 19
     return TTLockFeatureValue.hotelCard
   case .noClock:
+    // id: 20
     return TTLockFeatureValue.noClock
   case .noBroadcastInNormal:
+    // id: 21
     return TTLockFeatureValue.noBroadcastInNormal
   case .passageMode:
+    // id: 22
     return TTLockFeatureValue.passageMode
   case .turnOffAutoLock:
+    // id: 23
     return TTLockFeatureValue.turnOffAutoLock
   case .wirelessKeypad:
+    // id: 24
     return TTLockFeatureValue.wirelessKeypad
   case .light:
+    // id: 25
     return TTLockFeatureValue.light
   case .hotelCardBlacklist:
+    // id: 26
     return TTLockFeatureValue.hotelCardBlacklist
   case .identityCard:
+    // id: 27
     return TTLockFeatureValue.identityCard
   case .tamperAlert:
+    // id: 28
     return TTLockFeatureValue.tamperAlert
   case .resetButton:
+    // id: 29
     return TTLockFeatureValue.resetButton
   case .privacyLock:
+    // id: 30
     return TTLockFeatureValue.privacyLock
   case .deadLock:
+    // id: 32
     return TTLockFeatureValue.deadLock
   case .cyclicCardOrFingerprint:
+    // id: 34
     return TTLockFeatureValue.cyclicCardOrFingerprint
+  case .unlockDirection:
+    // id: 36
+    return TTLockFeatureValue.unlockDirection
   case .fingerVein:
+    // id: 37
     return TTLockFeatureValue.fingerVein
   case .ble5G:
+    // id: 38
     return TTLockFeatureValue.ble5G
   case .nbAwake:
+    // id: 39
     return TTLockFeatureValue.nbAwake
   case .recoverCyclePasscode:
+    // id: 40
     return TTLockFeatureValue.recoverCyclePasscode
   case .remoteKey:
+    // id: 41
     return TTLockFeatureValue.wirelessKeyFob
   case .getAccessoryElectricQuantity:
+    // id: 42
     return TTLockFeatureValue.getAccessoryElectricQuantity
   case .soundVolumeAndLanguageSetting:
+    // id: 43
     return TTLockFeatureValue.soundVolume
   case .qrCode:
+    // id: 44
     return TTLockFeatureValue.qrCode
   case .doorSensorState:
+    // id: 45
     return TTLockFeatureValue.sensorState
   case .passageModeAutoUnlockSetting:
+    // id: 46
     return TTLockFeatureValue.passageModeAutoUnlock
+  case .fingerprintDistribution:
+    // id: 47
+    return nil
+  case .zhongZheng:
+    // id: 48
+    return nil
+  case .syno:
+    // id: 49
+    return nil
   case .doorSensor:
+    // id: 50
     return TTLockFeatureValue.doorSensor
   case .doorSensorAlert:
+    // id: 51
     return TTLockFeatureValue.doorSensorAlert
   case .sensitivity:
+    // id: 52
     return TTLockFeatureValue.sensitivity
   case .face:
+    // id: 53
     return TTLockFeatureValue.face
+  case .motorTorque:
+    // id: 54
+    return TTLockFeatureValue.motorTorque
   case .cpuCard:
+    // id: 55
     return TTLockFeatureValue.cpuCard
   case .wifiLock:
+    // id: 56
     return TTLockFeatureValue.wifiLock
   case .wifiLockStaticIP:
+    // id: 58
     return TTLockFeatureValue.wifiLockStaticIP
   case .passcodeKeyNumber:
+    // id: 60
     return TTLockFeatureValue.passcodeKeyNumber
+  case .meariCamera:
+    // id: 61
+    return nil
   case .standAloneActivation:
+    // id: 62
     return TTLockFeatureValue.standAloneActivation
   case .doubleAuth:
+    // id: 63
     return TTLockFeatureValue.doubleAuth
   case .authorizedUnlock:
+    // id: 64
     return TTLockFeatureValue.authorizedUnlock
   case .gatewayAuthorizedUnlock:
+    // id: 65
     return TTLockFeatureValue.gatewayAuthorizedUnlock
   case .noEkeyUnlock:
+    // id: 66
     return TTLockFeatureValue.noEkeyUnlock
+  case .xiongMaiCamera:
+    // id: 67
+    return nil
+  case .onMicroChip:
+    // id: 68
+    return nil
   case .zhiAnPhotoFace:
+    // id: 69
     return TTLockFeatureValue.zhiAnPhotoFace
   case .palmVein:
+    // id: 70
     return TTLockFeatureValue.palmVein
   case .wifiArea:
+    // id: 71
     return TTLockFeatureValue.wifiArea
   case .xiaoCaoCamera:
+    // id: 75
     return TTLockFeatureValue.xiaoCaoCamera
   case .resetLockByCode:
+    // id: 76
     return TTLockFeatureValue.resetLockByCode
   case .thirdPartyBluetoothDevice:
+    // id: 77
     return nil
   case .autoSetAngle:
+    // id: 78
     return TTLockFeatureValue.autoSetAngle
   case .manualSetAngle:
+    // id: 79
     return TTLockFeatureValue.manualSetAngle
   case .controlLatchBolt:
+    // id: 80
     return TTLockFeatureValue.controlLatchBolt
   case .autoSetUnlockDirection:
+    // id: 81
     return TTLockFeatureValue.autoSetUnlockDirection
   case .icCardSecuritySetting:
+    // id: 82
     return nil
   case .wifiPowerSavingTime:
+    // id: 83
     return TTLockFeatureValue.wifiPowerSavingTime
   case .multiFunctionKeypad:
+    // id: 84
     return TTLockFeatureValue.multifunctionalKeypad
   case .doNotSupportTurnOffLatchBolt:
-    return nil
+    // id: 85
+    return TTLockFeatureValue.fullyAutomatic
   case .publicMode:
+    // id: 86
     return TTLockFeatureValue.publicMode
   case .lowBatteryAutoUnlock:
+    // id: 87
     return TTLockFeatureValue.lowBatteryAutoUnlock
   case .motorDriveTime:
+    // id: 88
     return TTLockFeatureValue.motorDriveTime
   case .modifyFeatureValue:
+    // id: 89
     return TTLockFeatureValue.modifyFeatureValue
   case .modifyLockNamePrefix:
+    // id: 90
     return TTLockFeatureValue.modifyLockNamePrefix
+  case .passcodeWithOpenPrivacyLock:
+    // id: 91
+    return TTLockFeatureValue.passcodeWithOpenPrivacyLock
   case .authCode:
+    // id: 92
     return TTLockFeatureValue.authCode
   case .unauthorizedAttemptAlarm:
+    // id: 93
+    return TTLockFeatureValue.unauthorizedAttemptAlert
+  case .linkLock:
+    // id: 94
+    return TTLockFeatureValue.linkLock
+  case .clearPasscodeAndDynamicPasscodeSetting:
+    // id: 95
     return nil
   case .powerSaverSupportWifi:
+    // id: 96
     return TTLockFeatureValue.powerSaverSupportWifi
   case .bluetoothAdvertisingSetting:
-    return nil
+    // id: 97
+    return TTLockFeatureValue.bluetoothAdvertisingInterval
   case .workingMode:
+    // id: 98
     return TTLockFeatureValue.workingMode
   case .supplierCode:
-    return nil
+    // id: 99
+    return TTLockFeatureValue.supplierNumber
   case .catOne:
-    return nil
+    // id: 100
+    return TTLockFeatureValue.catOne
   case .forcedOpeningDoorAlarm:
-    return nil
+    // id: 102
+    return TTLockFeatureValue.doorForceOpenAlert
   case .zhiAnFaceFeatureSecondGeneration:
+    // id: 103
+    return TTLockFeatureValue.zhiAnSecondGenerationPhotoFace
+  case .wifiFirmwareVersion:
+    // id: 104
     return nil
   case .supportDeadLocking:
-    return nil
+    // id: 106
+    return TTLockFeatureValue.secondDeadLock
   case .workingTime:
+    // id: 107
     return TTLockFeatureValue.workingTime
   case .customQRCode:
+    // id: 108
     return TTLockFeatureValue.customQRCode
   case .securityM1Card:
+    // id: 109
     return TTLockFeatureValue.securityM1Card
   case .yiShengPhotoFace:
+    // id: 110
     return TTLockFeatureValue.yiShengPhotoFace
   case .pictureFaceDelivery:
-    return nil
+    // id: 112
+    // iOS bit 112 为 YiNuoPhotoFace，与 Android SUPPORT_PICTURE_FACE_DELIVERY 同 bit。
+    return TTLockFeatureValue.yiNuoPhotoFace
+  case .yiNuoPhotoFace:
+    // id: 112
+    return TTLockFeatureValue.yiNuoPhotoFace
   case .supportSetAlias:
+    // id: 114
     return TTLockFeatureValue.setAlias
   case .hideWifiCatOneSleepModeSetting:
+    // id: 117
     return TTLockFeatureValue.hideSleepMode
   case .semiAutomaticModeControl:
+    // id: 119
     return TTLockFeatureValue.semiAutomaticModeControl
   case .supportSetUserAttributes:
+    // id: 120
     return TTLockFeatureValue.setUserAttributes
-  case .supportSupervision:
-    return TTLockFeatureValue.proofCapture
-  case .yiNuoPhotoFace:
-    return TTLockFeatureValue.yiNuoPhotoFace
+  case .motorDriveBoardFirmwareVersion:
+    // id: 122
+    return nil
+  case .urlFinger:
+    // id: 123
+    return nil
   case .urlFace:
+    // id: 124
     return TTLockFeatureValue.urlFace
+  case .urlPalmVein:
+    // id: 125
+    return nil
+  case .supportSupervision:
+    // id: 126
+    return TTLockFeatureValue.proofCapture
   case .humanPresenceSensor:
+    // id: 128
     return TTLockFeatureValue.humanPresenceSensor
-  case .unlockDirection:
-    return TTLockFeatureValue.unlockDirection
+  case .faceFeatureDataType:
+    // id: 132
+    return nil
   }
 }
 

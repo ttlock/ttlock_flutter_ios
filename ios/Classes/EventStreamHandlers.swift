@@ -531,7 +531,10 @@ final class AccessoryWaterMeterStartScanStreamHandlerImpl: AccessoryWaterMeterSt
           TTMeterScanModel(
             name: model.name,
             mac: model.mac,
-            rssi: Int64(model.rssi)
+            rssi: Int64(model.rssi),
+            isInited: model.isInited,
+            type: Int64(model.type),
+            scanTime: model.scanTime
           ))
       },
       failure: { err, msg in
@@ -557,7 +560,10 @@ final class AccessoryElectricMeterStartScanStreamHandlerImpl:
           TTMeterScanModel(
             name: model.name,
             mac: model.mac,
-            rssi: Int64(model.rssi)
+            rssi: Int64(model.rssi),
+            isInited: model.isInited,
+            type: Int64(model.type),
+            scanTime: model.scanTime
           ))
       },
       failure: { err, msg in
