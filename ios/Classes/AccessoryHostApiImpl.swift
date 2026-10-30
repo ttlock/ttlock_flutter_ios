@@ -205,12 +205,15 @@ final class AccessoryHostApiImpl: NSObject, TTAccessoryHostApi {
   func waterMeterInit(
     params: TTWaterMeterInitParam, completion: @escaping (Result<TTWaterMeterInitResult, Error>) -> Void
   ) {
-    let info: [String: String] = [
+    // 计能模式（postpaid）不传 price，与 Android SDK BATCH_BIND 行为一致。
+    var info: [String: String] = [
       "mac": params.mac,
       "number": params.name,
       "payMode": params.payMode == .postpaid ? "0" : "1",
-      "price": "\(params.price)",
     ]
+    if params.payMode == .prepaid {
+      info["price"] = "\(params.price)"
+    }
     TTWaterMeter.add(withInfo: info) { result in
       completion(.success(TTWaterMeterInitResult(
         waterMeterId: Int64(result.waterMeterId),
@@ -287,7 +290,9 @@ final class AccessoryHostApiImpl: NSObject, TTAccessoryHostApi {
   func waterMeterSetPayMode(
     mac: String, payMode: TTMeterPayMode, price: Double, completion: @escaping (Result<Void, Error>) -> Void
   ) {
-    TTWaterMeter.setPayModeWithMac(mac, payMode: payModeConvert(payMode), price: "\(price)") {
+    // 计能模式（postpaid）不传 price（传空串，SDK 参数为非可选 String）。
+    let priceStr = payMode == .prepaid ? "\(price)" : "1"
+    TTWaterMeter.setPayModeWithMac(mac, payMode: payModeConvert(payMode), price: priceStr) {
       completion(.success(()))
     } failure: { error, errorMsg in
       completion(
@@ -403,12 +408,15 @@ final class AccessoryHostApiImpl: NSObject, TTAccessoryHostApi {
   func electricMeterInit(
     params: TTElectricMeterInitParam, completion: @escaping (Result<TTElectricMeterInitResult, Error>) -> Void
   ) {
-    let info: [String: String] = [
+    // 计能模式（postpaid）不传 price，与 Android SDK BATCH_BIND 行为一致。
+    var info: [String: String] = [
       "mac": params.mac,
       "number": params.name,
       "payMode": params.payMode == .postpaid ? "0" : "1",
-      "price": "\(params.price)",
     ]
+    if params.payMode == .prepaid {
+      info["price"] = "\(params.price)"
+    }
     TTElectricMeter.add(withInfo: info) { addResult in
       completion(.success(TTElectricMeterInitResult(
         electricMeterId: Int64(addResult.electricMeterId),
@@ -490,7 +498,9 @@ final class AccessoryHostApiImpl: NSObject, TTAccessoryHostApi {
   func electricMeterSetPayMode(
     mac: String, payMode: TTMeterPayMode, price: Double, completion: @escaping (Result<Void, Error>) -> Void
   ) {
-    TTElectricMeter.setPayModeWithMac(mac, payMode: payModeConvert(payMode), price: "\(price)") {
+    // 计能模式（postpaid）不传 price（传空串，SDK 参数为非可选 String）。
+    let priceStr = payMode == .prepaid ? "\(price)" : "1"
+    TTElectricMeter.setPayModeWithMac(mac, payMode: payModeConvert(payMode), price: priceStr) {
       completion(.success(()))
     } failure: { error, errorMsg in
       completion(

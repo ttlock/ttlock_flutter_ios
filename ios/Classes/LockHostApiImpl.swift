@@ -752,9 +752,14 @@ final class LockHostApiImpl: NSObject, TTLockHostApi {
   }
 
   func setLockLatchBolt(
-    keepTime: Int64, lockData: String, completion: @escaping (Result<Void, Error>) -> Void
+    driveLevel: Int64, keepTime: Int64, lockData: String,
+    completion: @escaping (Result<Void, Error>) -> Void
   ) {
-    TTLock.setLatchBoltWithDriveLevel(-1, keepTime: Int32(truncatingIfNeeded: keepTime), lockData: lockData) {
+    TTLock.setLatchBoltWithDriveLevel(
+      Int32(truncatingIfNeeded: driveLevel),
+      keepTime: Int32(truncatingIfNeeded: keepTime),
+      lockData: lockData
+    ) {
       completion(.success(()))
     } failure: { errorCode, errorMsg in
       completion(
@@ -1354,6 +1359,32 @@ final class LockHostApiImpl: NSObject, TTLockHostApi {
     } failure: { errorCode, errorMsg in
       completion(
         .failure(makeLockApiError(operation: "setLightTime", error: errorCode, message: errorMsg)))
+    }
+  }
+
+  func getBluetoothAdvertisingInterval(
+    lockData: String, completion: @escaping (Result<Double, Error>) -> Void
+  ) {
+    TTLock.getBluetoothAdvertisingInterval(withLockData: lockData) { interval in
+      completion(.success(Double(interval)))
+    } failure: { errorCode, errorMsg in
+      completion(
+        .failure(
+          makeLockApiError(
+            operation: "getBluetoothAdvertisingInterval", error: errorCode, message: errorMsg)))
+    }
+  }
+
+  func setBluetoothAdvertisingInterval(
+    interval: Double, lockData: String, completion: @escaping (Result<Void, Error>) -> Void
+  ) {
+    TTLock.setBluetoothAdvertisingInterval(Float(interval), lockData: lockData) {
+      completion(.success(()))
+    } failure: { errorCode, errorMsg in
+      completion(
+        .failure(
+          makeLockApiError(
+            operation: "setBluetoothAdvertisingInterval", error: errorCode, message: errorMsg)))
     }
   }
 
