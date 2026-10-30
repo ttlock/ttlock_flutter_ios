@@ -351,12 +351,9 @@ final class AccessoryStartScanRemoteKeypadStreamHandlerImpl:
   ) {
     TTWirelessKeypad.startScanKeypad { model in
       guard let m = model else { return }
-      var adv: [String: Any?] = [:]
-        if let raw = m.advertisementData {
-        for (k, v) in raw {
-          if let ks = k as? String { adv[ks] = v as Any? }
-        }
-      }
+      // 不透传 CoreBluetooth advertisementData：其中含 CBUUID 等类型，
+      // Flutter StandardMessageCodec 无法编码，会抛 NSInternalInconsistencyException。
+      // 与遥控器/门磁扫描及 Android 侧保持一致，传空 map。
       sink.success(
         TTRemoteAccessoryScanModel(
           name: m.keypadName ?? "",
@@ -364,7 +361,7 @@ final class AccessoryStartScanRemoteKeypadStreamHandlerImpl:
           rssi: Int64(m.rssi),
           scanTime: Int64(Date().timeIntervalSince1970 * 1000),
           isMultifunctionalKeypad: m.isMultifunctionalKeypad,
-          advertisementData: adv
+          advertisementData: [:]
         ))
     }
   }
