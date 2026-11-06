@@ -535,7 +535,7 @@ func featureValueConvert(_ lockFunction: TTLockFunction) -> TTLockFeatureValue? 
     return TTLockFeatureValue.semiAutomaticModeControl
   case .supportSetUserAttributes:
     // id: 120
-    return TTLockFeatureValue.setUserAttributes
+    return TTLockFeatureValue.setOpenTypeAttributes
   case .motorDriveBoardFirmwareVersion:
     // id: 122
     return nil

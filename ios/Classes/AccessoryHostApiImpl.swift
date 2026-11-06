@@ -15,10 +15,11 @@ final class AccessoryHostApiImpl: NSObject, TTAccessoryHostApi {
   }
 
   func initRemoteKey(
-    mac: String, lockData: String, completion: @escaping (Result<TTLockSystemModel, Error>) -> Void
+    mac: String, lockData: String, connectAddress: String?,
+    completion: @escaping (Result<TTLockSystemModel, Error>) -> Void
   ) {
-    TTWirelessKeyFob.newInitialize(withKeyFobMac: mac, lockData: lockData) {
-      status, electricQuantity, systemModel in
+      TTWirelessKeyFob.initializeKeyFob(withMac: mac, lockData: lockData) {
+      status, systemModel in
       if status == TTKeyFobSuccess {
         completion(
           .success(
@@ -26,7 +27,7 @@ final class AccessoryHostApiImpl: NSObject, TTAccessoryHostApi {
               modelNum: systemModel?.modelNum ?? "",
               hardwareRevision: systemModel?.hardwareRevision ?? "",
               firmwareRevision: systemModel?.firmwareRevision ?? "",
-              electricQuantity: Int64(electricQuantity),
+              electricQuantity: nil,
               nbOperator: nil,
               nbNodeId: nil,
               nbCardNumber: nil,
