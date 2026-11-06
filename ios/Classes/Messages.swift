@@ -2314,8 +2314,13 @@ struct GatewayDeviceInfo: Hashable {
 struct TTRemoteAccessoryScanModel: Hashable {
   /// 设备名称。
   var name: String
-  /// 蓝牙 MAC 地址。
+  /// 设备逻辑 MAC 地址（广播解析出的地址，用于业务标识）。
   var mac: String
+  /// BLE 连接地址。
+  ///
+  /// R2 遥控器初始化连接须使用此字段，不可用 [mac] 替代；
+  /// R1 / 键盘 / 门磁等可与 [mac] 相同，或为空（回退使用 [mac]）。
+  var connectAddress: String? = nil
   /// 蓝牙信号强度。
   var rssi: Int64
   /// 扫描时间戳。
@@ -2330,14 +2335,16 @@ struct TTRemoteAccessoryScanModel: Hashable {
   static func fromList(_ pigeonVar_list: [Any?]) -> TTRemoteAccessoryScanModel? {
     let name = pigeonVar_list[0] as! String
     let mac = pigeonVar_list[1] as! String
-    let rssi = pigeonVar_list[2] as! Int64
-    let scanTime: Int64? = nilOrValue(pigeonVar_list[3])
-    let isMultifunctionalKeypad = pigeonVar_list[4] as! Bool
-    let advertisementData = pigeonVar_list[5] as! [String: Any?]
+    let connectAddress: String? = nilOrValue(pigeonVar_list[2])
+    let rssi = pigeonVar_list[3] as! Int64
+    let scanTime: Int64? = nilOrValue(pigeonVar_list[4])
+    let isMultifunctionalKeypad = pigeonVar_list[5] as! Bool
+    let advertisementData = pigeonVar_list[6] as! [String: Any?]
 
     return TTRemoteAccessoryScanModel(
       name: name,
       mac: mac,
+      connectAddress: connectAddress,
       rssi: rssi,
       scanTime: scanTime,
       isMultifunctionalKeypad: isMultifunctionalKeypad,
@@ -2348,6 +2355,7 @@ struct TTRemoteAccessoryScanModel: Hashable {
     return [
       name,
       mac,
+      connectAddress,
       rssi,
       scanTime,
       isMultifunctionalKeypad,
@@ -2358,13 +2366,14 @@ struct TTRemoteAccessoryScanModel: Hashable {
     if Swift.type(of: lhs) != Swift.type(of: rhs) {
       return false
     }
-    return deepEqualsMessages(lhs.name, rhs.name) && deepEqualsMessages(lhs.mac, rhs.mac) && deepEqualsMessages(lhs.rssi, rhs.rssi) && deepEqualsMessages(lhs.scanTime, rhs.scanTime) && deepEqualsMessages(lhs.isMultifunctionalKeypad, rhs.isMultifunctionalKeypad) && deepEqualsMessages(lhs.advertisementData, rhs.advertisementData)
+    return deepEqualsMessages(lhs.name, rhs.name) && deepEqualsMessages(lhs.mac, rhs.mac) && deepEqualsMessages(lhs.connectAddress, rhs.connectAddress) && deepEqualsMessages(lhs.rssi, rhs.rssi) && deepEqualsMessages(lhs.scanTime, rhs.scanTime) && deepEqualsMessages(lhs.isMultifunctionalKeypad, rhs.isMultifunctionalKeypad) && deepEqualsMessages(lhs.advertisementData, rhs.advertisementData)
   }
 
   func hash(into hasher: inout Hasher) {
     hasher.combine("TTRemoteAccessoryScanModel")
     deepHashMessages(value: name, hasher: &hasher)
     deepHashMessages(value: mac, hasher: &hasher)
+    deepHashMessages(value: connectAddress, hasher: &hasher)
     deepHashMessages(value: rssi, hasher: &hasher)
     deepHashMessages(value: scanTime, hasher: &hasher)
     deepHashMessages(value: isMultifunctionalKeypad, hasher: &hasher)
@@ -6863,9 +6872,10 @@ protocol TTAccessoryHostApi {
   func setAccessoryAddKeypadCardParam(param: TTKeypadCredentialEventParam) throws
   /// 初始化遥控器。
   ///
-  /// [mac] 遥控器 MAC 地址。
+  /// [mac] 遥控器逻辑 MAC 地址（广播解析出的地址）。
   /// [lockData] 关联锁凭证。
-  func initRemoteKey(mac: String, lockData: String, completion: @escaping (Result<TTLockSystemModel, Error>) -> Void)
+  /// [connectAddress] R2 初始化时用于 BLE 连接的地址；为空则回退使用 [mac]。
+  func initRemoteKey(mac: String, lockData: String, connectAddress: String?, completion: @escaping (Result<TTLockSystemModel, Error>) -> Void)
   /// 初始化无线键盘。
   ///
   /// [mac] 键盘 MAC 地址。
@@ -7119,15 +7129,17 @@ class TTAccessoryHostApiSetup {
     }
     /// 初始化遥控器。
     ///
-    /// [mac] 遥控器 MAC 地址。
+    /// [mac] 遥控器逻辑 MAC 地址（广播解析出的地址）。
     /// [lockData] 关联锁凭证。
+    /// [connectAddress] R2 初始化时用于 BLE 连接的地址；为空则回退使用 [mac]。
     let initRemoteKeyChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.ttlock_flutter.TTAccessoryHostApi.initRemoteKey\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       initRemoteKeyChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
         let macArg = args[0] as! String
         let lockDataArg = args[1] as! String
-        api.initRemoteKey(mac: macArg, lockData: lockDataArg) { result in
+        let connectAddressArg: String? = nilOrValue(args[2])
+        api.initRemoteKey(mac: macArg, lockData: lockDataArg, connectAddress: connectAddressArg) { result in
           switch result {
           case .success(let res):
             reply(wrapResult(res))

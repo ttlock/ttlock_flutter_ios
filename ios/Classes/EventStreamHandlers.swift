@@ -330,6 +330,7 @@ final class AccessoryStartScanRemoteKeyStreamHandlerImpl: AccessoryStartScanRemo
         TTRemoteAccessoryScanModel(
           name: m.keyFobName ?? "",
           mac: m.keyFobMac ?? "",
+          connectAddress: m.keyFobMac,
           rssi: Int64(m.rssi),
           scanTime: Int64(Date().timeIntervalSince1970 * 1000),
           isMultifunctionalKeypad: false,
@@ -358,6 +359,7 @@ final class AccessoryStartScanRemoteKeypadStreamHandlerImpl:
         TTRemoteAccessoryScanModel(
           name: m.keypadName ?? "",
           mac: m.keypadMac ?? "",
+          connectAddress: m.keypadMac,
           rssi: Int64(m.rssi),
           scanTime: Int64(Date().timeIntervalSince1970 * 1000),
           isMultifunctionalKeypad: m.isMultifunctionalKeypad,
@@ -472,6 +474,7 @@ final class AccessoryStartScanDoorSensorStreamHandlerImpl: AccessoryStartScanDoo
           TTRemoteAccessoryScanModel(
             name: model.name,
             mac: model.mac,
+            connectAddress: model.mac,
             rssi: Int64(model.rssi),
             scanTime: model.scanTime,
             isMultifunctionalKeypad: false,
