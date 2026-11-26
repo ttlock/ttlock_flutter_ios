@@ -50,6 +50,28 @@ public final class TtlockFlutterPlugin: NSObject, FlutterPlugin {
       with: registrar.messenger(), streamHandler: AccessoryElectricMeterStartScanStreamHandlerImpl()
     )
 
+    let upgradeApi = UpgradeHostApiImpl(context: context)
+    TTUpgradeHostApiSetup.setUp(binaryMessenger: registrar.messenger(), api: upgradeApi)
+    UpgradeLockStreamHandler.register(
+      with: registrar.messenger(), streamHandler: UpgradeLockStreamHandlerImpl())
+    UpgradeGatewayStreamHandler.register(
+      with: registrar.messenger(), streamHandler: UpgradeGatewayStreamHandlerImpl())
+    UpgradeGatewayByPackageStreamHandler.register(
+      with: registrar.messenger(), streamHandler: UpgradeGatewayByPackageStreamHandlerImpl())
+    UpgradeWaterMeterStreamHandler.register(
+      with: registrar.messenger(), streamHandler: UpgradeWaterMeterStreamHandlerImpl())
+    UpgradeWaterMeterByPackageStreamHandler.register(
+      with: registrar.messenger(), streamHandler: UpgradeWaterMeterByPackageStreamHandlerImpl())
+    UpgradeElectricMeterStreamHandler.register(
+      with: registrar.messenger(), streamHandler: UpgradeElectricMeterStreamHandlerImpl())
+    UpgradeElectricMeterByPackageStreamHandler.register(
+      with: registrar.messenger(),
+      streamHandler: UpgradeElectricMeterByPackageStreamHandlerImpl())
+    UpgradeKeypadStreamHandler.register(
+      with: registrar.messenger(), streamHandler: UpgradeKeypadStreamHandlerImpl())
+    UpgradeKeypadByPackageStreamHandler.register(
+      with: registrar.messenger(), streamHandler: UpgradeKeypadByPackageStreamHandlerImpl())
+
     TTLock.setupBluetooth { bluetoothState in
       NSLog("bluetoothState: \(bluetoothState)")
     }
