@@ -12,6 +12,10 @@ final class UpgradeHostApiImpl: NSObject, TTUpgradeHostApi {
     context.upgradeLock = param
   }
 
+  func setUpgradeLockByPackageParam(param: TTUpgradeLockByPackageParam) throws {
+    context.upgradeLockByPackage = param
+  }
+
   func setUpgradeGatewayParam(param: TTUpgradeGatewayParam) throws {
     context.upgradeGateway = param
   }

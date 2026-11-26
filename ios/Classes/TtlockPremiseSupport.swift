@@ -142,6 +142,7 @@ final class EventContextStore {
 
   /// 升级流参数槽。与 addCard 等凭证槽分开，由 `setUpgrade*Param` 写入。
   var upgradeLock: TTUpgradeLockParam?
+  var upgradeLockByPackage: TTUpgradeLockByPackageParam?
   var upgradeGateway: TTUpgradeGatewayParam?
   var upgradeGatewayByPackage: TTUpgradeGatewayByPackageParam?
   var upgradeWaterMeter: TTUpgradeWaterMeterParam?

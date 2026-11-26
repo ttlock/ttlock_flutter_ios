@@ -17,17 +17,22 @@ App  →  ttlock_flutter（Dart API）
 
 对外 Dart API 在父插件（`package:ttlock_flutter/ttlock.dart`）。本包负责把 Pigeon Host API 接到 TTLock iOS 原生 SDK。
 
+## 固件升级
+
+除 `TTLock` 外另依赖 CocoaPod **`TTLockDFU`**，将 `TTUpgradeHostApi` 与各升级 EventChannel 接到 `TTLockDFU`。在线版（`main`）支持锁 / 网关（网络 + 固件包）/ 水表 / 电表 / 键盘升级。约定见父仓库 [README_ZH](https://github.com/ttlock/ttlock_flutter/blob/mix/README_ZH.md)「固件升级」。
+
 ## 原生 SDK（本分支：在线版）
 
 | 项 | 值 |
 |----|-----|
 | 分支 | `main` |
 | CocoaPod | `TTLock` **3.6.16** |
+| DFU CocoaPod | `TTLockDFU` **3.6.14**（传递 `iOSDFULibrary ~> 4.14.0`） |
 | 声明位置 | `ios/ttlock_flutter_ios.podspec` |
 | 最低 iOS | **12.0** |
-| Swift 模块别名 | `-module-alias TTLockSDK=TTLock` |
+| Swift 模块别名 | `-module-alias TTLockSDK=TTLock -module-alias TTLockDFUSDK=TTLockDFU` |
 
-已启用 `s.static_framework = true`。模块别名是因为二进制同时把模块名与主类都暴露为 `TTLock`；Swift 侧通过 `TTLockSDK` 别名引用类型。
+已启用 `s.static_framework = true`。模块别名是因为二进制同时把模块名与主类都暴露为 `TTLock` / `TTLockDFU`；Swift 侧通过 `TTLockSDK` / `TTLockDFUSDK` 别名引用类型。
 
 修改 podspec 或切换分支后请重新安装 Pod：
 
@@ -45,7 +50,9 @@ cd ios && pod install
 |--|------------------|-----------|
 | 场景 | 在线 / 云端 SDK | 本地化（On-Premise） |
 | CocoaPod | `TTLock`（如 3.6.16） | `TTLockOnPremise`（如 2.2.6） |
-| 模块别名 | `TTLockSDK=TTLock` | `TTLockSDK=TTLockOnPremise` |
+| DFU CocoaPod | `TTLockDFU`（如 3.6.14） | `TTLockDFUOnPremise`（如 2.2.6） |
+| 模块别名 | `TTLockSDK=TTLock` / `TTLockDFUSDK=TTLockDFU` | `TTLockSDK=TTLockOnPremise` / `TTLockDFUSDK=TTLockDFUOnPremise` |
+| 升级能力 | 全量 | 仅锁固件包 + 网关固件包 |
 
 不要在同一 App Target 混用在线版与本地化 Pod。本地化打包请改用 **`premise`** 分支。
 

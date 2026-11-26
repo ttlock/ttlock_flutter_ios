@@ -17,17 +17,22 @@ App  →  ttlock_flutter (Dart API)
 
 Dart-facing APIs live in the parent plugin (`package:ttlock_flutter/ttlock.dart`). This package wires Pigeon host APIs to the native TTLock iOS SDK.
 
+## Firmware upgrade
+
+Depends on CocoaPod **`TTLockDFU`** in addition to `TTLock`. Wires `TTUpgradeHostApi` + upgrade EventChannels to `TTLockDFU`. Online (`main`) supports lock / gateway (network + package) / water meter / electric meter / keypad upgrade. See the parent [README](https://github.com/ttlock/ttlock_flutter/blob/mix/README.md) «Firmware upgrade».
+
 ## Native SDK (this branch: online)
 
 | Item | Value |
 |------|--------|
 | Branch | `main` |
 | CocoaPod | `TTLock` **3.6.16** |
+| DFU CocoaPod | `TTLockDFU` **3.6.14**（pulls `iOSDFULibrary ~> 4.14.0`） |
 | Declared in | `ios/ttlock_flutter_ios.podspec` |
 | Min iOS | **12.0** |
-| Swift module alias | `-module-alias TTLockSDK=TTLock` |
+| Swift module alias | `-module-alias TTLockSDK=TTLock -module-alias TTLockDFUSDK=TTLockDFU` |
 
-`s.static_framework = true` is enabled. The module alias exists because the binary exposes both the module name and the main class as `TTLock`; Swift code imports types via the `TTLockSDK` alias.
+`s.static_framework = true` is enabled. Module aliases exist because the binaries expose both the module name and the main class as `TTLock` / `TTLockDFU`; Swift imports types via `TTLockSDK` / `TTLockDFUSDK`.
 
 After changing the podspec or switching branches:
 
@@ -45,7 +50,9 @@ cd ios && pod install
 |--|----------------------|-----------|
 | Scenario | Online / cloud SDK | On-premise |
 | CocoaPod | `TTLock` (e.g. 3.6.16) | `TTLockOnPremise` (e.g. 2.2.6) |
-| Module alias | `TTLockSDK=TTLock` | `TTLockSDK=TTLockOnPremise` |
+| DFU CocoaPod | `TTLockDFU` (e.g. 3.6.14) | `TTLockDFUOnPremise` (e.g. 2.2.6) |
+| Module alias | `TTLockSDK=TTLock` / `TTLockDFUSDK=TTLockDFU` | `TTLockSDK=TTLockOnPremise` / `TTLockDFUSDK=TTLockDFUOnPremise` |
+| Upgrade APIs | Full set | Lock package + gateway package only |
 
 Do not mix online and on-premise pods in one app target. For on-premise packaging, use the **`premise`** branch.
 

@@ -335,6 +335,53 @@ final class UpgradeLockStreamHandlerImpl: UpgradeLockStreamHandler {
         )
       }
     }
+    UpgradeDfuFacade.startLockNet(
+      clientId: param.clientId,
+      accessToken: param.accessToken,
+      lockId: param.lockId,
+      lockData: param.lockData,
+      onProgress: callbacks.onProgress,
+      onSuccess: callbacks.onSuccess,
+      onError: callbacks.onError
+    )
+  }
+
+  override func onCancel(withArguments arguments: Any?) {
+    gate.cancel { UpgradeDfuFacade.stopLock() }
+  }
+}
+
+final class UpgradeLockByPackageStreamHandlerImpl: UpgradeLockByPackageStreamHandler {
+  private let gate = UpgradeListenGate(kind: .lock)
+
+  override func onListen(withArguments arguments: Any?, sink: PigeonEventSink<TTUpgradeEvent>) {
+    guard
+      let param = gate.begin(
+        sink: sink,
+        param: upgradeContext.upgradeLockByPackage,
+        missingMessage: "请先通过 setUpgradeLockByPackageParam 设置参数后再订阅 upgradeLockByPackage"
+      )
+    else { return }
+    let generation = gate.generation
+    let callbacks = upgradeCallbacks(kind: .lock, generation: generation) {
+      onUpgradeMain {
+        guard UpgradeSession.shared.matches(kind: .lock, generation: generation) else { return }
+        UpgradeDfuFacade.refreshLockSystemInfo(
+          lockData: param.lockData,
+          onSuccess: { refreshed in
+            succeedUpgrade(kind: .lock, generation: generation, lockData: refreshed)
+          },
+          onError: { message in
+            failUpgrade(
+              kind: .lock,
+              generation: generation,
+              code: .getSpecialValueError,
+              message: message
+            )
+          }
+        )
+      }
+    }
     UpgradeDfuFacade.startLock(
       firmwarePackage: param.firmwarePackage,
       lockData: param.lockData,

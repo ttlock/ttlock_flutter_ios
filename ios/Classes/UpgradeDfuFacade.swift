@@ -17,6 +17,29 @@ enum UpgradeHardware {
 
 /// main 的 DFU 入口。模块别名是 `TTLockDFUSDK`，类名仍是 `TTLockDFU` / `TTGatewayDFU` / `TTDeviceDFU`。
 enum UpgradeDfuFacade {
+  static func startLockNet(
+    clientId: String,
+    accessToken: String,
+    lockId: Int64,
+    lockData: String,
+    onProgress: @escaping (TTUpgradeStatus, Int) -> Void,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (TTLockUpgradeError, String?) -> Void
+  ) {
+    TTLockDFU.shareInstance().start(
+      withClientId: clientId,
+      accessToken: accessToken,
+      lockId: NSNumber(value: lockId),
+      lockData: lockData,
+      successBlock: { operation, progress in
+        handleOperation(operation, progress: progress, onProgress: onProgress, onSuccess: onSuccess)
+      },
+      fail: { _, code in
+        handleFailure(code, onError: onError)
+      }
+    )
+  }
+
   static func startLock(
     firmwarePackage: String,
     lockData: String,

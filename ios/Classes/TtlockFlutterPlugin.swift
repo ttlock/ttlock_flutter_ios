@@ -59,6 +59,13 @@ public final class TtlockFlutterPlugin: NSObject, FlutterPlugin {
       messenger: upgradeMessenger,
       channelName: "dev.flutter.pigeon.ttlock_flutter.TTEventChannelApi.upgradeLock",
       handler: upgradeLock)
+    let upgradeLockByPackage = UpgradeLockByPackageStreamHandlerImpl()
+    UpgradeLockByPackageStreamHandler.register(
+      with: upgradeMessenger, streamHandler: upgradeLockByPackage)
+    attachUpgradeEventBridge(
+      messenger: upgradeMessenger,
+      channelName: "dev.flutter.pigeon.ttlock_flutter.TTEventChannelApi.upgradeLockByPackage",
+      handler: upgradeLockByPackage)
     let upgradeGateway = UpgradeGatewayStreamHandlerImpl()
     UpgradeGatewayStreamHandler.register(with: upgradeMessenger, streamHandler: upgradeGateway)
     attachUpgradeEventBridge(
