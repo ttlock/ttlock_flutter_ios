@@ -90,11 +90,21 @@ final class UpgradeSession {
   }
 }
 
-/// 本路是否真正占有会话。第二路 busy 的 onCancel 不能 take 掉第一路。
+/// 替换 listen 的同步 onCancel 期间 > 0。这次取消只换 sink，不能拆掉已占有的会话。
+private var upgradeRelistenDepth = 0
+
+/// 同一个 EventChannel handler 上的多次 listen 共用这扇门。
+///
+/// 忙拒绝和缺参不能清掉已经占有的会话。每张 listen 一张票据：占有的记下代际，否则为 nil。
+/// 真正的 cancel 先核销 nil 票据，所以第二路自己的 onCancel 不会 abort 第一路。
+/// 只有核销到当前代际时才 take 并 abort。
 private final class UpgradeListenGate {
   let kind: UpgradeKind
   private var ownsSession = false
   private(set) var generation: Int64 = 0
+  private var tickets: [Int64?] = []
+  private var nextCancelId: Int64 = 0
+  private var queuedCancels: [Int64] = []
 
   init(kind: UpgradeKind) {
     self.kind = kind
@@ -105,29 +115,130 @@ private final class UpgradeListenGate {
     param: T?,
     missingMessage: String
   ) -> T? {
-    ownsSession = false
+    if upgradeRelistenDepth > 0, !queuedCancels.isEmpty {
+      queuedCancels.removeLast()
+    }
     guard let param else {
       sink.error(code: upgradeFailCode, message: missingMessage, details: nil)
       sink.endOfStream()
+      tickets.append(nil)
       return nil
     }
-    guard let generation = UpgradeSession.shared.begin(kind: kind, sink: sink) else {
+    guard let started = UpgradeSession.shared.begin(kind: kind, sink: sink) else {
       sink.error(code: upgradeFailCode, message: upgradeBusyMessage, details: nil)
       sink.endOfStream()
+      tickets.append(nil)
       return nil
     }
-    self.generation = generation
+    generation = started
     ownsSession = true
+    tickets.append(started)
     return param
   }
 
-  /// 成功或失败已经 take 过会话时，这里不再 endUpgrade。
-  func cancel(_ abort: () -> Void) {
-    guard ownsSession else { return }
+  /// 成功或失败已经 take 过会话时，这里不再 abort。
+  func cancel(_ abort: @escaping () -> Void) {
+    nextCancelId += 1
+    let id = nextCancelId
+    queuedCancels.append(id)
+    DispatchQueue.main.async { [weak self] in
+      guard let self else { return }
+      guard let index = self.queuedCancels.firstIndex(of: id) else { return }
+      self.queuedCancels.remove(at: index)
+      self.releaseOne(abort)
+    }
+  }
+
+  private func releaseOne(_ abort: () -> Void) {
+    if let index = tickets.firstIndex(where: { $0 == nil }) {
+      tickets.remove(at: index)
+      return
+    }
+    guard ownsSession, !tickets.isEmpty else { return }
+    let token = tickets.removeFirst()
+    guard let token, token == generation else { return }
     ownsSession = false
-    guard UpgradeSession.shared.take(kind: kind) != nil else { return }
+    guard UpgradeSession.shared.take(kind: kind, generation: token) != nil else { return }
     abort()
   }
+}
+
+private final class UpgradeSinkBox {
+  var ended = false
+}
+
+private final class UpgradeChannelBridge {
+  let messenger: FlutterBinaryMessenger
+  let channelName: String
+  let handler: PigeonEventChannelWrapper<TTUpgradeEvent>
+  private var active: UpgradeSinkBox?
+
+  init(
+    messenger: FlutterBinaryMessenger,
+    channelName: String,
+    handler: PigeonEventChannelWrapper<TTUpgradeEvent>
+  ) {
+    self.messenger = messenger
+    self.channelName = channelName
+    self.handler = handler
+  }
+
+  func install() {
+    messenger.setMessageHandlerOnChannel(channelName, binaryMessageHandler: { [self] message, reply in
+      guard let message else {
+        reply(nil)
+        return
+      }
+      let call = messagesPigeonMethodCodec.decodeMethodCall(message)
+      if call.method == "listen" {
+        let box = UpgradeSinkBox()
+        let replacing = self.active != nil
+        self.active = box
+        let events: FlutterEventSink = { event in
+          guard !box.ended, self.active === box else { return }
+          if (event as AnyObject?) === (FlutterEndOfEventStream as AnyObject) {
+            box.ended = true
+            self.messenger.send(onChannel: self.channelName, message: nil)
+          } else if let error = event as? FlutterError {
+            self.messenger.send(
+              onChannel: self.channelName,
+              message: messagesPigeonMethodCodec.encodeErrorEnvelope(error))
+          } else {
+            self.messenger.send(
+              onChannel: self.channelName,
+              message: messagesPigeonMethodCodec.encodeSuccessEnvelope(event))
+          }
+        }
+        let sink = PigeonEventSink<TTUpgradeEvent>(events)
+        upgradeRelistenDepth += 1
+        if replacing {
+          handler.onCancel(withArguments: nil)
+        }
+        handler.onListen(withArguments: call.arguments, sink: sink)
+        upgradeRelistenDepth -= 1
+        reply(messagesPigeonMethodCodec.encodeSuccessEnvelope(nil))
+      } else if call.method == "cancel" {
+        self.active = nil
+        handler.onCancel(withArguments: call.arguments)
+        reply(messagesPigeonMethodCodec.encodeSuccessEnvelope(nil))
+      } else {
+        reply(nil)
+      }
+    }
+  }
+}
+
+private var upgradeChannelBridges: [UpgradeChannelBridge] = []
+
+func attachUpgradeEventBridge(
+  messenger: FlutterBinaryMessenger,
+  channelName: String,
+  handler: PigeonEventChannelWrapper<TTUpgradeEvent>
+) {
+  let bridge = UpgradeChannelBridge(
+    messenger: messenger, channelName: channelName, handler: handler)
+  upgradeChannelBridges.append(bridge)
+  bridge.install()
 }
 
 private func onUpgradeMain(_ block: @escaping () -> Void) {
