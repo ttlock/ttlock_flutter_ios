@@ -1,15 +1,6 @@
 import Foundation
 
-/// 与 Android premise / OHOS 对齐：code 为 `TTLockError.fail` 数字串，message 为 notImplemented。
-func makeUpgradeNotImplementedError(operation: String) -> PigeonError {
-  PigeonError(
-    code: "\(TTLockError.fail.rawValue)",
-    message: "notImplemented",
-    details: "\(operation) is not implemented on premise"
-  )
-}
-
-/// 升级参数槽与停止。premise 只实现锁包和网关包；停止只结束对应客户端。
+/// 升级参数槽。中止 DFU 仅在对应 Stream `onCancel` 中处理（对齐扫描）。
 final class UpgradeHostApiImpl: NSObject, TTUpgradeHostApi {
   private let context: EventContextStore
 
@@ -22,7 +13,7 @@ final class UpgradeHostApiImpl: NSObject, TTUpgradeHostApi {
   }
 
   func setUpgradeGatewayParam(param: TTUpgradeGatewayParam) throws {
-    throw makeUpgradeNotImplementedError(operation: "setUpgradeGatewayParam")
+    context.upgradeGateway = param
   }
 
   func setUpgradeGatewayByPackageParam(param: TTUpgradeGatewayByPackageParam) throws {
@@ -30,50 +21,26 @@ final class UpgradeHostApiImpl: NSObject, TTUpgradeHostApi {
   }
 
   func setUpgradeWaterMeterParam(param: TTUpgradeWaterMeterParam) throws {
-    throw makeUpgradeNotImplementedError(operation: "setUpgradeWaterMeterParam")
+    context.upgradeWaterMeter = param
   }
 
   func setUpgradeWaterMeterByPackageParam(param: TTUpgradeWaterMeterByPackageParam) throws {
-    throw makeUpgradeNotImplementedError(operation: "setUpgradeWaterMeterByPackageParam")
+    context.upgradeWaterMeterByPackage = param
   }
 
   func setUpgradeElectricMeterParam(param: TTUpgradeElectricMeterParam) throws {
-    throw makeUpgradeNotImplementedError(operation: "setUpgradeElectricMeterParam")
+    context.upgradeElectricMeter = param
   }
 
   func setUpgradeElectricMeterByPackageParam(param: TTUpgradeElectricMeterByPackageParam) throws {
-    throw makeUpgradeNotImplementedError(operation: "setUpgradeElectricMeterByPackageParam")
+    context.upgradeElectricMeterByPackage = param
   }
 
   func setUpgradeKeypadParam(param: TTUpgradeKeypadParam) throws {
-    throw makeUpgradeNotImplementedError(operation: "setUpgradeKeypadParam")
+    context.upgradeKeypad = param
   }
 
   func setUpgradeKeypadByPackageParam(param: TTUpgradeKeypadByPackageParam) throws {
-    throw makeUpgradeNotImplementedError(operation: "setUpgradeKeypadByPackageParam")
-  }
-
-  func stopUpgradeLock() throws {
-    let sink = UpgradeSession.shared.take(kind: .lock)
-    UpgradeDfuFacade.stopLock()
-    sink?.endOfStream()
-  }
-
-  func stopUpgradeGateway() throws {
-    let sink = UpgradeSession.shared.take(kind: .gateway)
-    UpgradeDfuFacade.stopGateway()
-    sink?.endOfStream()
-  }
-
-  func stopUpgradeWaterMeter() throws {
-    throw makeUpgradeNotImplementedError(operation: "stopUpgradeWaterMeter")
-  }
-
-  func stopUpgradeElectricMeter() throws {
-    throw makeUpgradeNotImplementedError(operation: "stopUpgradeElectricMeter")
-  }
-
-  func stopUpgradeKeypad() throws {
-    throw makeUpgradeNotImplementedError(operation: "stopUpgradeKeypad")
+    context.upgradeKeypadByPackage = param
   }
 }

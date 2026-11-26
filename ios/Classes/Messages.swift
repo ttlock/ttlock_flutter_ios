@@ -8799,16 +8799,6 @@ protocol TTUpgradeHostApi {
   ///
   /// [param] 键盘固件包升级参数。
   func setUpgradeKeypadByPackageParam(param: TTUpgradeKeypadByPackageParam) throws
-  /// 停止锁升级。
-  func stopUpgradeLock() throws
-  /// 停止网关升级（网络 DFU 与固件包共用）。
-  func stopUpgradeGateway() throws
-  /// 停止水表升级。不得 abort 锁或网关 DFU。
-  func stopUpgradeWaterMeter() throws
-  /// 停止电表升级。不得 abort 锁或网关 DFU。
-  func stopUpgradeElectricMeter() throws
-  /// 停止键盘升级。不得 abort 锁或网关 DFU。
-  func stopUpgradeKeypad() throws
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -8982,76 +8972,6 @@ class TTUpgradeHostApiSetup {
       }
     } else {
       setUpgradeKeypadByPackageParamChannel.setMessageHandler(nil)
-    }
-    /// 停止锁升级。
-    let stopUpgradeLockChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.ttlock_flutter.TTUpgradeHostApi.stopUpgradeLock\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      stopUpgradeLockChannel.setMessageHandler { _, reply in
-        do {
-          try api.stopUpgradeLock()
-          reply(wrapResult(nil))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      stopUpgradeLockChannel.setMessageHandler(nil)
-    }
-    /// 停止网关升级（网络 DFU 与固件包共用）。
-    let stopUpgradeGatewayChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.ttlock_flutter.TTUpgradeHostApi.stopUpgradeGateway\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      stopUpgradeGatewayChannel.setMessageHandler { _, reply in
-        do {
-          try api.stopUpgradeGateway()
-          reply(wrapResult(nil))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      stopUpgradeGatewayChannel.setMessageHandler(nil)
-    }
-    /// 停止水表升级。不得 abort 锁或网关 DFU。
-    let stopUpgradeWaterMeterChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.ttlock_flutter.TTUpgradeHostApi.stopUpgradeWaterMeter\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      stopUpgradeWaterMeterChannel.setMessageHandler { _, reply in
-        do {
-          try api.stopUpgradeWaterMeter()
-          reply(wrapResult(nil))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      stopUpgradeWaterMeterChannel.setMessageHandler(nil)
-    }
-    /// 停止电表升级。不得 abort 锁或网关 DFU。
-    let stopUpgradeElectricMeterChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.ttlock_flutter.TTUpgradeHostApi.stopUpgradeElectricMeter\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      stopUpgradeElectricMeterChannel.setMessageHandler { _, reply in
-        do {
-          try api.stopUpgradeElectricMeter()
-          reply(wrapResult(nil))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      stopUpgradeElectricMeterChannel.setMessageHandler(nil)
-    }
-    /// 停止键盘升级。不得 abort 锁或网关 DFU。
-    let stopUpgradeKeypadChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.ttlock_flutter.TTUpgradeHostApi.stopUpgradeKeypad\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      stopUpgradeKeypadChannel.setMessageHandler { _, reply in
-        do {
-          try api.stopUpgradeKeypad()
-          reply(wrapResult(nil))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      stopUpgradeKeypadChannel.setMessageHandler(nil)
     }
   }
 }
