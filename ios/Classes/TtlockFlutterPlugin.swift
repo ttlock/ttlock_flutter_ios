@@ -52,25 +52,66 @@ public final class TtlockFlutterPlugin: NSObject, FlutterPlugin {
 
     let upgradeApi = UpgradeHostApiImpl(context: context)
     TTUpgradeHostApiSetup.setUp(binaryMessenger: registrar.messenger(), api: upgradeApi)
-    UpgradeLockStreamHandler.register(
-      with: registrar.messenger(), streamHandler: UpgradeLockStreamHandlerImpl())
-    UpgradeGatewayStreamHandler.register(
-      with: registrar.messenger(), streamHandler: UpgradeGatewayStreamHandlerImpl())
+    let upgradeMessenger = registrar.messenger()
+    let upgradeLock = UpgradeLockStreamHandlerImpl()
+    UpgradeLockStreamHandler.register(with: upgradeMessenger, streamHandler: upgradeLock)
+    attachUpgradeEventBridge(
+      messenger: upgradeMessenger,
+      channelName: "dev.flutter.pigeon.ttlock_flutter.TTEventChannelApi.upgradeLock",
+      handler: upgradeLock)
+    let upgradeGateway = UpgradeGatewayStreamHandlerImpl()
+    UpgradeGatewayStreamHandler.register(with: upgradeMessenger, streamHandler: upgradeGateway)
+    attachUpgradeEventBridge(
+      messenger: upgradeMessenger,
+      channelName: "dev.flutter.pigeon.ttlock_flutter.TTEventChannelApi.upgradeGateway",
+      handler: upgradeGateway)
+    let upgradeGatewayByPackage = UpgradeGatewayByPackageStreamHandlerImpl()
     UpgradeGatewayByPackageStreamHandler.register(
-      with: registrar.messenger(), streamHandler: UpgradeGatewayByPackageStreamHandlerImpl())
-    UpgradeWaterMeterStreamHandler.register(
-      with: registrar.messenger(), streamHandler: UpgradeWaterMeterStreamHandlerImpl())
+      with: upgradeMessenger, streamHandler: upgradeGatewayByPackage)
+    attachUpgradeEventBridge(
+      messenger: upgradeMessenger,
+      channelName: "dev.flutter.pigeon.ttlock_flutter.TTEventChannelApi.upgradeGatewayByPackage",
+      handler: upgradeGatewayByPackage)
+    let upgradeWaterMeter = UpgradeWaterMeterStreamHandlerImpl()
+    UpgradeWaterMeterStreamHandler.register(with: upgradeMessenger, streamHandler: upgradeWaterMeter)
+    attachUpgradeEventBridge(
+      messenger: upgradeMessenger,
+      channelName: "dev.flutter.pigeon.ttlock_flutter.TTEventChannelApi.upgradeWaterMeter",
+      handler: upgradeWaterMeter)
+    let upgradeWaterMeterByPackage = UpgradeWaterMeterByPackageStreamHandlerImpl()
     UpgradeWaterMeterByPackageStreamHandler.register(
-      with: registrar.messenger(), streamHandler: UpgradeWaterMeterByPackageStreamHandlerImpl())
+      with: upgradeMessenger, streamHandler: upgradeWaterMeterByPackage)
+    attachUpgradeEventBridge(
+      messenger: upgradeMessenger,
+      channelName: "dev.flutter.pigeon.ttlock_flutter.TTEventChannelApi.upgradeWaterMeterByPackage",
+      handler: upgradeWaterMeterByPackage)
+    let upgradeElectricMeter = UpgradeElectricMeterStreamHandlerImpl()
     UpgradeElectricMeterStreamHandler.register(
-      with: registrar.messenger(), streamHandler: UpgradeElectricMeterStreamHandlerImpl())
+      with: upgradeMessenger, streamHandler: upgradeElectricMeter)
+    attachUpgradeEventBridge(
+      messenger: upgradeMessenger,
+      channelName: "dev.flutter.pigeon.ttlock_flutter.TTEventChannelApi.upgradeElectricMeter",
+      handler: upgradeElectricMeter)
+    let upgradeElectricMeterByPackage = UpgradeElectricMeterByPackageStreamHandlerImpl()
     UpgradeElectricMeterByPackageStreamHandler.register(
-      with: registrar.messenger(),
-      streamHandler: UpgradeElectricMeterByPackageStreamHandlerImpl())
-    UpgradeKeypadStreamHandler.register(
-      with: registrar.messenger(), streamHandler: UpgradeKeypadStreamHandlerImpl())
+      with: upgradeMessenger, streamHandler: upgradeElectricMeterByPackage)
+    attachUpgradeEventBridge(
+      messenger: upgradeMessenger,
+      channelName: "dev.flutter.pigeon.ttlock_flutter.TTEventChannelApi.upgradeElectricMeterByPackage",
+      handler: upgradeElectricMeterByPackage)
+    let upgradeKeypad = UpgradeKeypadStreamHandlerImpl()
+    UpgradeKeypadStreamHandler.register(with: upgradeMessenger, streamHandler: upgradeKeypad)
+    attachUpgradeEventBridge(
+      messenger: upgradeMessenger,
+      channelName: "dev.flutter.pigeon.ttlock_flutter.TTEventChannelApi.upgradeKeypad",
+      handler: upgradeKeypad)
+    let upgradeKeypadByPackage = UpgradeKeypadByPackageStreamHandlerImpl()
     UpgradeKeypadByPackageStreamHandler.register(
-      with: registrar.messenger(), streamHandler: UpgradeKeypadByPackageStreamHandlerImpl())
+      with: upgradeMessenger, streamHandler: upgradeKeypadByPackage)
+    attachUpgradeEventBridge(
+      messenger: upgradeMessenger,
+      channelName: "dev.flutter.pigeon.ttlock_flutter.TTEventChannelApi.upgradeKeypadByPackage",
+      handler: upgradeKeypadByPackage)
 
     TTLock.setupBluetooth { bluetoothState in
       NSLog("bluetoothState: \(bluetoothState)")
