@@ -18,6 +18,8 @@ iOS implementation for ttlock_flutter.
   s.platform = :ios, '12.0'
 #   s.vendored_frameworks = "Frameworks/**/*.framework"
   s.dependency 'TTLock', '3.6.16'
+  # 与 TTLock 3.6.16 同仓 tag 内的 DFU 版本。传递 iOSDFULibrary ~> 4.14.0，不另钉。
+  s.dependency 'TTLockDFU', '3.6.14'
   s.static_framework = true
   s.swift_version = '5.0'
 
@@ -26,9 +28,8 @@ iOS implementation for ttlock_flutter.
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
     'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64',
-    # TTLock.framework exposes both the module name and the main class as `TTLock`.
-    # Qualifiers like `TTLock.TTLockConfigType` bind to the class, not the module.
-    # Import the same binary under an alias so `TTLockSDK.*` refers to module types.
-    'OTHER_SWIFT_FLAGS' => '$(inherited) -module-alias TTLockSDK=TTLock'
+    # TTLock / TTLockDFU 的模块名与主类同名。
+    # 别名只改模块名：`import TTLockSDK` / `import TTLockDFUSDK`，类名仍是 TTLock / TTLockDFU。
+    'OTHER_SWIFT_FLAGS' => '$(inherited) -module-alias TTLockSDK=TTLock -module-alias TTLockDFUSDK=TTLockDFU'
   }
 end

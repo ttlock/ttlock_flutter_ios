@@ -139,6 +139,17 @@ final class EventContextStore {
   var gatewayGetNearbyWifi = GatewayNearbyWifiSlot()
   var accessoryAddKeypadFingerprint = KeypadCredentialSlot()
   var accessoryAddKeypadCard = KeypadCredentialSlot()
+
+  /// 升级流参数槽。与 addCard 等凭证槽分开，由 `setUpgrade*Param` 写入。
+  var upgradeLock: TTUpgradeLockParam?
+  var upgradeGateway: TTUpgradeGatewayParam?
+  var upgradeGatewayByPackage: TTUpgradeGatewayByPackageParam?
+  var upgradeWaterMeter: TTUpgradeWaterMeterParam?
+  var upgradeWaterMeterByPackage: TTUpgradeWaterMeterByPackageParam?
+  var upgradeElectricMeter: TTUpgradeElectricMeterParam?
+  var upgradeElectricMeterByPackage: TTUpgradeElectricMeterByPackageParam?
+  var upgradeKeypad: TTUpgradeKeypadParam?
+  var upgradeKeypadByPackage: TTUpgradeKeypadByPackageParam?
 }
 
 extension TTCycleModel {
