@@ -140,9 +140,20 @@ final class EventContextStore {
   var accessoryAddKeypadFingerprint = KeypadCredentialSlot()
   var accessoryAddKeypadCard = KeypadCredentialSlot()
 
-  /// 升级流参数槽。premise 只写入锁包和网关包；其余能力在 Host 直接 notImplemented。
-  var upgradeLock: TTUpgradeLockParam?
+  /// 升级流参数槽。premise 写入锁包 / 网关包 / 设备包；网络类在 Host 直接 notImplemented。
+  var upgradeLockByPackage: TTUpgradeLockByPackageParam?
   var upgradeGatewayByPackage: TTUpgradeGatewayByPackageParam?
+  var upgradeWaterMeterByPackage: TTUpgradeWaterMeterByPackageParam?
+  var upgradeElectricMeterByPackage: TTUpgradeElectricMeterByPackageParam?
+  var upgradeKeypadByPackage: TTUpgradeKeypadByPackageParam?
+}
+
+func makeUpgradeNotImplementedError(_ operation: String) -> PigeonError {
+  PigeonError(
+    code: "\(TTLockUpgradeError.upgradeFail.rawValue)",
+    message: "notImplemented",
+    details: operation
+  )
 }
 
 extension TTCycleModel {

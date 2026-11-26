@@ -17,17 +17,22 @@ App  →  ttlock_flutter（Dart API）
 
 对外 Dart API 在父插件（`package:ttlock_flutter/ttlock.dart`）。本包负责把 Pigeon Host API 接到 TTLock iOS 原生 SDK。
 
+## 固件升级
+
+除 `TTLockOnPremise` 外另依赖 CocoaPod **`TTLockDFUOnPremise`**。本地化（`premise`）仅编译**锁固件包**与**网关固件包** DFU。约定见父仓库 [README_ZH](https://github.com/ttlock/ttlock_flutter/blob/mix/README_ZH.md)「固件升级」。
+
 ## 原生 SDK（本分支：本地化）
 
 | 项 | 值 |
 |----|-----|
 | 分支 | `premise` |
 | CocoaPod | `TTLockOnPremise` **2.2.6** |
+| DFU CocoaPod | `TTLockDFUOnPremise` **2.2.6**（传递 `iOSDFULibrary ~> 4.14.0`） |
 | 声明位置 | `ios/ttlock_flutter_ios.podspec` |
 | 最低 iOS | **12.0** |
-| Swift 模块别名 | `-module-alias TTLockSDK=TTLockOnPremise` |
+| Swift 模块别名 | `-module-alias TTLockSDK=TTLockOnPremise -module-alias TTLockDFUSDK=TTLockDFUOnPremise` |
 
-已启用 `s.static_framework = true`。模块别名用于在链接本地化 Pod 时，通过 `TTLockSDK` 引用 SDK 类型。
+已启用 `s.static_framework = true`。模块别名用于在链接本地化 Pod 时，通过 `TTLockSDK` / `TTLockDFUSDK` 引用 SDK 类型。
 
 请确认 CocoaPods specs / 私有源可以解析 `TTLockOnPremise`（以本地化交付为准）。修改 podspec 或切换分支后请重新安装 Pod：
 
@@ -45,7 +50,9 @@ cd ios && pod install
 |--|---------------------|--------|
 | 场景 | 本地化（On-Premise） | 在线 / 云端 SDK |
 | CocoaPod | `TTLockOnPremise`（如 2.2.6） | `TTLock`（如 3.6.16） |
-| 模块别名 | `TTLockSDK=TTLockOnPremise` | `TTLockSDK=TTLock` |
+| DFU CocoaPod | `TTLockDFUOnPremise`（如 2.2.6） | `TTLockDFU`（如 3.6.14） |
+| 模块别名 | `TTLockSDK=TTLockOnPremise` / `TTLockDFUSDK=TTLockDFUOnPremise` | `TTLockSDK=TTLock` / `TTLockDFUSDK=TTLockDFU` |
+| 升级能力 | 仅锁固件包 + 网关固件包 | 全量 |
 
 不要在同一 App Target 混用在线版与本地化 Pod。在线 / 云端打包请改用 **`main`** 分支。
 

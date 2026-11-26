@@ -7,6 +7,9 @@ private let upgradeFailCode = "\(TTLockUpgradeError.upgradeFail.rawValue)"
 enum UpgradeKind {
   case lock
   case gateway
+  case water
+  case electric
+  case keypad
 }
 
 /// 同一时刻只允许一路升级。结束会话的回调必须带上开始时的代际，迟到回调不能结束下一次同路会话。
@@ -282,14 +285,22 @@ private func rejectNotImplemented(sink: PigeonEventSink<TTUpgradeEvent>, operati
 }
 
 final class UpgradeLockStreamHandlerImpl: UpgradeLockStreamHandler {
+  override func onListen(withArguments arguments: Any?, sink: PigeonEventSink<TTUpgradeEvent>) {
+    rejectNotImplemented(sink: sink, operation: "upgradeLock")
+  }
+
+  override func onCancel(withArguments arguments: Any?) {}
+}
+
+final class UpgradeLockByPackageStreamHandlerImpl: UpgradeLockByPackageStreamHandler {
   private let gate = UpgradeListenGate(kind: .lock)
 
   override func onListen(withArguments arguments: Any?, sink: PigeonEventSink<TTUpgradeEvent>) {
     guard
       let param = gate.begin(
         sink: sink,
-        param: upgradeContext.upgradeLock,
-        missingMessage: "请先通过 setUpgradeLockParam 设置参数后再订阅 upgradeLock"
+        param: upgradeContext.upgradeLockByPackage,
+        missingMessage: "请先通过 setUpgradeLockByPackageParam 设置参数后再订阅 upgradeLockByPackage"
       )
     else { return }
     let generation = gate.generation
@@ -372,11 +383,36 @@ final class UpgradeWaterMeterStreamHandlerImpl: UpgradeWaterMeterStreamHandler {
 }
 
 final class UpgradeWaterMeterByPackageStreamHandlerImpl: UpgradeWaterMeterByPackageStreamHandler {
+  private let gate = UpgradeListenGate(kind: .water)
+
   override func onListen(withArguments arguments: Any?, sink: PigeonEventSink<TTUpgradeEvent>) {
-    rejectNotImplemented(sink: sink, operation: "upgradeWaterMeterByPackage")
+    guard
+      let param = gate.begin(
+        sink: sink,
+        param: upgradeContext.upgradeWaterMeterByPackage,
+        missingMessage: "请先通过 setUpgradeWaterMeterByPackageParam 设置参数后再订阅 upgradeWaterMeterByPackage"
+      )
+    else { return }
+    let generation = gate.generation
+    let callbacks = upgradeCallbacks(kind: .water, generation: generation) {
+      succeedUpgrade(kind: .water, generation: generation)
+    }
+    UpgradeDfuFacade.startDevice(
+      type: .waterMeter,
+      deviceMac: param.deviceMac,
+      lockData: "",
+      slotNumber: 0,
+      featureValue: "",
+      mode: .package(firmwarePackage: param.firmwarePackage),
+      onProgress: callbacks.onProgress,
+      onSuccess: callbacks.onSuccess,
+      onError: callbacks.onError
+    )
   }
 
-  override func onCancel(withArguments arguments: Any?) {}
+  override func onCancel(withArguments arguments: Any?) {
+    gate.cancel { UpgradeDfuFacade.stopDevice() }
+  }
 }
 
 final class UpgradeElectricMeterStreamHandlerImpl: UpgradeElectricMeterStreamHandler {
@@ -388,11 +424,37 @@ final class UpgradeElectricMeterStreamHandlerImpl: UpgradeElectricMeterStreamHan
 }
 
 final class UpgradeElectricMeterByPackageStreamHandlerImpl: UpgradeElectricMeterByPackageStreamHandler {
+  private let gate = UpgradeListenGate(kind: .electric)
+
   override func onListen(withArguments arguments: Any?, sink: PigeonEventSink<TTUpgradeEvent>) {
-    rejectNotImplemented(sink: sink, operation: "upgradeElectricMeterByPackage")
+    guard
+      let param = gate.begin(
+        sink: sink,
+        param: upgradeContext.upgradeElectricMeterByPackage,
+        missingMessage:
+          "请先通过 setUpgradeElectricMeterByPackageParam 设置参数后再订阅 upgradeElectricMeterByPackage"
+      )
+    else { return }
+    let generation = gate.generation
+    let callbacks = upgradeCallbacks(kind: .electric, generation: generation) {
+      succeedUpgrade(kind: .electric, generation: generation)
+    }
+    UpgradeDfuFacade.startDevice(
+      type: .electricMeter,
+      deviceMac: param.deviceMac,
+      lockData: "",
+      slotNumber: 0,
+      featureValue: "",
+      mode: .package(firmwarePackage: param.firmwarePackage),
+      onProgress: callbacks.onProgress,
+      onSuccess: callbacks.onSuccess,
+      onError: callbacks.onError
+    )
   }
 
-  override func onCancel(withArguments arguments: Any?) {}
+  override func onCancel(withArguments arguments: Any?) {
+    gate.cancel { UpgradeDfuFacade.stopDevice() }
+  }
 }
 
 final class UpgradeKeypadStreamHandlerImpl: UpgradeKeypadStreamHandler {
@@ -404,9 +466,34 @@ final class UpgradeKeypadStreamHandlerImpl: UpgradeKeypadStreamHandler {
 }
 
 final class UpgradeKeypadByPackageStreamHandlerImpl: UpgradeKeypadByPackageStreamHandler {
+  private let gate = UpgradeListenGate(kind: .keypad)
+
   override func onListen(withArguments arguments: Any?, sink: PigeonEventSink<TTUpgradeEvent>) {
-    rejectNotImplemented(sink: sink, operation: "upgradeKeypadByPackage")
+    guard
+      let param = gate.begin(
+        sink: sink,
+        param: upgradeContext.upgradeKeypadByPackage,
+        missingMessage: "请先通过 setUpgradeKeypadByPackageParam 设置参数后再订阅 upgradeKeypadByPackage"
+      )
+    else { return }
+    let generation = gate.generation
+    let callbacks = upgradeCallbacks(kind: .keypad, generation: generation) {
+      succeedUpgrade(kind: .keypad, generation: generation)
+    }
+    UpgradeDfuFacade.startDevice(
+      type: .keypad,
+      deviceMac: param.deviceMac,
+      lockData: param.lockData ?? "",
+      slotNumber: param.slotNumber ?? 0,
+      featureValue: param.featureValue ?? "",
+      mode: .package(firmwarePackage: param.firmwarePackage),
+      onProgress: callbacks.onProgress,
+      onSuccess: callbacks.onSuccess,
+      onError: callbacks.onError
+    )
   }
 
-  override func onCancel(withArguments arguments: Any?) {}
+  override func onCancel(withArguments arguments: Any?) {
+    gate.cancel { UpgradeDfuFacade.stopDevice() }
+  }
 }

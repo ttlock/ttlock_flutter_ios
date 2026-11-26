@@ -17,17 +17,22 @@ App  →  ttlock_flutter (Dart API)
 
 Dart-facing APIs live in the parent plugin (`package:ttlock_flutter/ttlock.dart`). This package wires Pigeon host APIs to the native TTLock iOS SDK.
 
+## Firmware upgrade
+
+Depends on CocoaPod **`TTLockDFUOnPremise`** in addition to `TTLockOnPremise`. On-premise (`premise`) compiles **lock firmware-package** and **gateway firmware-package** DFU only. See the parent [README](https://github.com/ttlock/ttlock_flutter/blob/mix/README.md) «Firmware upgrade».
+
 ## Native SDK (this branch: on-premise)
 
 | Item | Value |
 |------|--------|
 | Branch | `premise` |
 | CocoaPod | `TTLockOnPremise` **2.2.6** |
+| DFU CocoaPod | `TTLockDFUOnPremise` **2.2.6**（pulls `iOSDFULibrary ~> 4.14.0`） |
 | Declared in | `ios/ttlock_flutter_ios.podspec` |
 | Min iOS | **12.0** |
-| Swift module alias | `-module-alias TTLockSDK=TTLockOnPremise` |
+| Swift module alias | `-module-alias TTLockSDK=TTLockOnPremise -module-alias TTLockDFUSDK=TTLockDFUOnPremise` |
 
-`s.static_framework = true` is enabled. The module alias lets Swift refer to SDK types via `TTLockSDK` while linking the on-premise pod.
+`s.static_framework = true` is enabled. Module aliases let Swift refer to SDK types via `TTLockSDK` / `TTLockDFUSDK` while linking the on-premise pods.
 
 Ensure your CocoaPods specs / private source can resolve `TTLockOnPremise` (as provided in your on-premise delivery). After changing the podspec or switching branches:
 
@@ -45,7 +50,9 @@ cd ios && pod install
 |--|-------------------------|--------|
 | Scenario | On-premise | Online / cloud SDK |
 | CocoaPod | `TTLockOnPremise` (e.g. 2.2.6) | `TTLock` (e.g. 3.6.16) |
-| Module alias | `TTLockSDK=TTLockOnPremise` | `TTLockSDK=TTLock` |
+| DFU CocoaPod | `TTLockDFUOnPremise` (e.g. 2.2.6) | `TTLockDFU` (e.g. 3.6.14) |
+| Module alias | `TTLockSDK=TTLockOnPremise` / `TTLockDFUSDK=TTLockDFUOnPremise` | `TTLockSDK=TTLock` / `TTLockDFUSDK=TTLockDFU` |
+| Upgrade APIs | Lock package + gateway package | Full set |
 
 Do not mix online and on-premise pods in one app target. For online / cloud packaging, use the **`main`** branch.
 
