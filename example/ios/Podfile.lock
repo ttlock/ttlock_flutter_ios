@@ -6,12 +6,12 @@ PODS:
     - ZIPFoundation (= 0.9.16)
   - ttlock_flutter_ios (0.0.1):
     - Flutter
-    - TTLockDFUOnPremise (= 2.2.6)
-    - TTLockOnPremise (= 2.2.6)
-  - TTLockDFUOnPremise (2.2.6):
+    - TTLockDFUOnPremise (= 2.3.0)
+    - TTLockOnPremise (= 2.3.0)
+  - TTLockDFUOnPremise (2.3.0):
     - iOSDFULibrary (~> 4.14.0)
     - TTLockOnPremise
-  - TTLockOnPremise (2.2.6)
+  - TTLockOnPremise (2.3.0)
   - ZIPFoundation (0.9.16)
 
 DEPENDENCIES:
@@ -38,9 +38,9 @@ SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   iOSDFULibrary: 69d3eebb0a992b37ccfe6baa4113b30632659fa3
-  ttlock_flutter_ios: 7758ff58ef5f0e8275ce48b8c889c24fc9eb996d
-  TTLockDFUOnPremise: 8388ee89ec836e9477668726a61bf6528c146109
-  TTLockOnPremise: 83f181632cb292a3faba32c77c1e13271330dc08
+  ttlock_flutter_ios: 37059387b6ad6155e44654de249bc245c9a635b5
+  TTLockDFUOnPremise: 253e0380029422c8217dd882779060e7d5965fbb
+  TTLockOnPremise: 7df4ac5661ea61bae1b7f56b2d8e9182bf55c46a
   ZIPFoundation: d170fa8e270b2a32bef9dcdcabff5b8f1a5deced
 
 PODFILE CHECKSUM: 3c63482e143d1b91d2d2560aee9fb04ecc74ac7e

@@ -423,7 +423,7 @@ func featureValueConvert(_ lockFunction: TTLockFunction) -> TTLockFeatureValue? 
     return TTLockFeatureValue.resetLockByCode
   case .thirdPartyBluetoothDevice:
     // id: 77
-    return nil
+    return TTLockFeatureValue.thirdDevice
   case .autoSetAngle:
     // id: 78
     return TTLockFeatureValue.autoSetAngle
@@ -483,7 +483,7 @@ func featureValueConvert(_ lockFunction: TTLockFunction) -> TTLockFeatureValue? 
     return TTLockFeatureValue.powerSaverSupportWifi
   case .bluetoothAdvertisingSetting:
     // id: 97
-    return TTLockFeatureValue.advertisingInterval
+    return TTLockFeatureValue.bluetoothAdvertisingInterval
   case .workingMode:
     // id: 98
     return TTLockFeatureValue.workingMode
@@ -501,7 +501,7 @@ func featureValueConvert(_ lockFunction: TTLockFunction) -> TTLockFeatureValue? 
     return TTLockFeatureValue.zhiAnSecondGenerationPhotoFace
   case .wifiFirmwareVersion:
     // id: 104
-    return nil
+    return TTLockFeatureValue.wifiFirmwareVersion
   case .supportDeadLocking:
     // id: 106
     return TTLockFeatureValue.secondDeadLock
@@ -535,10 +535,10 @@ func featureValueConvert(_ lockFunction: TTLockFunction) -> TTLockFeatureValue? 
     return TTLockFeatureValue.semiAutomaticModeControl
   case .supportSetUserAttributes:
     // id: 120
-    return TTLockFeatureValue.setUserAttributes
+    return TTLockFeatureValue.setOpenTypeAttributes
   case .motorDriveBoardFirmwareVersion:
     // id: 122
-    return nil
+    return TTLockFeatureValue.motorDriveBoardFirmwareVersion
   case .urlFinger:
     // id: 123
     return nil
@@ -556,7 +556,7 @@ func featureValueConvert(_ lockFunction: TTLockFunction) -> TTLockFeatureValue? 
     return TTLockFeatureValue.humanPresenceSensor
   case .faceFeatureDataType:
     // id: 132
-    return nil
+    return TTLockFeatureValue.faceFeatureDataType
   }
 }
 

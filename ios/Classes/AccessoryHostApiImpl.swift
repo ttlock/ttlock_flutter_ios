@@ -19,15 +19,15 @@ final class AccessoryHostApiImpl: NSObject, TTAccessoryHostApi {
     completion: @escaping (Result<TTLockSystemModel, Error>) -> Void
   ) {
       TTWirelessKeyFob.initializeKeyFob(withMac: mac, lockData: lockData) {
-      status, systemModel in
+      status, initModel in
       if status == TTKeyFobSuccess {
         completion(
           .success(
             TTLockSystemModel(
-              modelNum: systemModel?.modelNum ?? "",
-              hardwareRevision: systemModel?.hardwareRevision ?? "",
-              firmwareRevision: systemModel?.firmwareRevision ?? "",
-              electricQuantity: nil,
+              modelNum: initModel?.modelNum ?? "",
+              hardwareRevision: initModel?.hardwareRevision ?? "",
+              firmwareRevision: initModel?.firmwareRevision ?? "",
+              electricQuantity: initModel.map { Int64($0.electricQuantity) },
               nbOperator: nil,
               nbNodeId: nil,
               nbCardNumber: nil,

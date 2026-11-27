@@ -100,7 +100,7 @@ enum UpgradeDfuFacade {
     TTDfuBridge.endDeviceUpgrade()
   }
 
-  /// 锁升级成功后刷新 lockData。`TTLockOnPremise` 2.2.6 走 `getLockSystemInfoWithLockData`。
+  /// 锁升级成功后刷新 lockData。`TTLockOnPremise` 2.3.0 走 `getLockSystemInfoWithLockData`。
   /// 失败交给调用方映射为 `getSpecialValueError`，这里不吞。
   static func refreshLockSystemInfo(
     lockData: String,

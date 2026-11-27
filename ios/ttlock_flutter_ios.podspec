@@ -18,9 +18,9 @@ iOS implementation for ttlock_flutter.
   s.dependency 'Flutter'
   s.platform = :ios, '15.0'
 #   s.vendored_frameworks = "Frameworks/**/*.framework"
-  s.dependency 'TTLockOnPremise', '2.2.6'
-  # 与 TTLockOnPremise 2.2.6 同 tag。传递 iOSDFULibrary ~> 4.14.0，不另钉。
-  s.dependency 'TTLockDFUOnPremise', '2.2.6'
+  s.dependency 'TTLockOnPremise', '2.3.0'
+  # 与 TTLockOnPremise 2.3.0 同 tag。传递 iOSDFULibrary ~> 4.14.0，不另钉。
+  s.dependency 'TTLockDFUOnPremise', '2.3.0'
   s.static_framework = true
   s.swift_version = '5.0'
 

@@ -26,8 +26,8 @@ Depends on CocoaPod **`TTLockDFUOnPremise`** in addition to `TTLockOnPremise`. O
 | Item | Value |
 |------|--------|
 | Branch | `premise` |
-| CocoaPod | `TTLockOnPremise` **2.2.6** |
-| DFU CocoaPod | `TTLockDFUOnPremise` **2.2.6**（pulls `iOSDFULibrary ~> 4.14.0`） |
+| CocoaPod | `TTLockOnPremise` **2.3.0** |
+| DFU CocoaPod | `TTLockDFUOnPremise` **2.3.0**（pulls `iOSDFULibrary ~> 4.14.0`） |
 | Declared in | `ios/ttlock_flutter_ios.podspec` |
 | Min iOS | **12.0** |
 | Swift module alias | `-module-alias TTLockSDK=TTLockOnPremise -module-alias TTLockDFUSDK=TTLockDFUOnPremise` |
@@ -49,8 +49,8 @@ cd ios && pod install
 | | `premise` (this branch) | `main` |
 |--|-------------------------|--------|
 | Scenario | On-premise | Online / cloud SDK |
-| CocoaPod | `TTLockOnPremise` (e.g. 2.2.6) | `TTLock` (e.g. 3.6.16) |
-| DFU CocoaPod | `TTLockDFUOnPremise` (e.g. 2.2.6) | `TTLockDFU` (e.g. 3.6.14) |
+| CocoaPod | `TTLockOnPremise` (e.g. 2.3.0) | `TTLock` (e.g. 3.6.16) |
+| DFU CocoaPod | `TTLockDFUOnPremise` (e.g. 2.3.0) | `TTLockDFU` (e.g. 3.6.14) |
 | Module alias | `TTLockSDK=TTLockOnPremise` / `TTLockDFUSDK=TTLockDFUOnPremise` | `TTLockSDK=TTLock` / `TTLockDFUSDK=TTLockDFU` |
 | Upgrade APIs | Lock package + gateway package | Full set |
 

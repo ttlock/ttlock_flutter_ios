@@ -26,8 +26,8 @@ App  →  ttlock_flutter（Dart API）
 | 项 | 值 |
 |----|-----|
 | 分支 | `premise` |
-| CocoaPod | `TTLockOnPremise` **2.2.6** |
-| DFU CocoaPod | `TTLockDFUOnPremise` **2.2.6**（传递 `iOSDFULibrary ~> 4.14.0`） |
+| CocoaPod | `TTLockOnPremise` **2.3.0** |
+| DFU CocoaPod | `TTLockDFUOnPremise` **2.3.0**（传递 `iOSDFULibrary ~> 4.14.0`） |
 | 声明位置 | `ios/ttlock_flutter_ios.podspec` |
 | 最低 iOS | **12.0** |
 | Swift 模块别名 | `-module-alias TTLockSDK=TTLockOnPremise -module-alias TTLockDFUSDK=TTLockDFUOnPremise` |
@@ -49,8 +49,8 @@ cd ios && pod install
 | | `premise`（本分支） | `main` |
 |--|---------------------|--------|
 | 场景 | 本地化（On-Premise） | 在线 / 云端 SDK |
-| CocoaPod | `TTLockOnPremise`（如 2.2.6） | `TTLock`（如 3.6.16） |
-| DFU CocoaPod | `TTLockDFUOnPremise`（如 2.2.6） | `TTLockDFU`（如 3.6.14） |
+| CocoaPod | `TTLockOnPremise`（如 2.3.0） | `TTLock`（如 3.6.16） |
+| DFU CocoaPod | `TTLockDFUOnPremise`（如 2.3.0） | `TTLockDFU`（如 3.6.14） |
 | 模块别名 | `TTLockSDK=TTLockOnPremise` / `TTLockDFUSDK=TTLockDFUOnPremise` | `TTLockSDK=TTLock` / `TTLockDFUSDK=TTLockDFU` |
 | 升级能力 | 仅锁固件包 + 网关固件包 | 全量 |
 
