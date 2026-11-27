@@ -17,9 +17,9 @@ iOS implementation for ttlock_flutter.
   s.dependency 'Flutter'
   s.platform = :ios, '15.0'
 #   s.vendored_frameworks = "Frameworks/**/*.framework"
-  s.dependency 'TTLock', '3.6.16'
-  # 与 TTLock 3.6.16 同仓 tag 内的 DFU 版本。传递 iOSDFULibrary ~> 4.14.0，不另钉。
-  s.dependency 'TTLockDFU', '3.6.14'
+  s.dependency 'TTLock', '3.7.0'
+  # 与 TTLock 3.7.0 同仓 tag 内的 DFU 版本。传递 iOSDFULibrary ~> 4.14.0，不另钉。
+  s.dependency 'TTLockDFU', '3.7.0'
   s.static_framework = true
   s.swift_version = '5.0'
 
