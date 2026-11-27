@@ -49,8 +49,8 @@ cd ios && pod install
 | | `main` (this branch) | `premise` |
 |--|----------------------|-----------|
 | Scenario | Online / cloud SDK | On-premise |
-| CocoaPod | `TTLock` (e.g. 3.6.16) | `TTLockOnPremise` (e.g. 2.2.6) |
-| DFU CocoaPod | `TTLockDFU` (e.g. 3.6.14) | `TTLockDFUOnPremise` (e.g. 2.2.6) |
+| CocoaPod | `TTLock` (e.g. 3.6.16) | `TTLockOnPremise` (e.g. 2.3.0) |
+| DFU CocoaPod | `TTLockDFU` (e.g. 3.6.14) | `TTLockDFUOnPremise` (e.g. 2.3.0) |
 | Module alias | `TTLockSDK=TTLock` / `TTLockDFUSDK=TTLockDFU` | `TTLockSDK=TTLockOnPremise` / `TTLockDFUSDK=TTLockDFUOnPremise` |
 | Upgrade APIs | Full set | Lock package + gateway package only |
 

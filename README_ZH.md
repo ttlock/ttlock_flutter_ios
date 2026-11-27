@@ -49,8 +49,8 @@ cd ios && pod install
 | | `main`（本分支） | `premise` |
 |--|------------------|-----------|
 | 场景 | 在线 / 云端 SDK | 本地化（On-Premise） |
-| CocoaPod | `TTLock`（如 3.6.16） | `TTLockOnPremise`（如 2.2.6） |
-| DFU CocoaPod | `TTLockDFU`（如 3.6.14） | `TTLockDFUOnPremise`（如 2.2.6） |
+| CocoaPod | `TTLock`（如 3.6.16） | `TTLockOnPremise`（如 2.3.0） |
+| DFU CocoaPod | `TTLockDFU`（如 3.6.14） | `TTLockDFUOnPremise`（如 2.3.0） |
 | 模块别名 | `TTLockSDK=TTLock` / `TTLockDFUSDK=TTLockDFU` | `TTLockSDK=TTLockOnPremise` / `TTLockDFUSDK=TTLockDFUOnPremise` |
 | 升级能力 | 全量 | 仅锁固件包 + 网关固件包 |
 
