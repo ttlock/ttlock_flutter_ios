@@ -81,7 +81,6 @@ dependencies:
     git:
       url: https://github.com/ttlock/ttlock_flutter_plus.git
       path: ttlock_flutter
-      ref: main   # 按团队发布分支 / tag 调整
 ```
 
 ```dart

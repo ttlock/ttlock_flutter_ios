@@ -81,7 +81,6 @@ dependencies:
     git:
       url: https://github.com/ttlock/ttlock_flutter_plus.git
       path: ttlock_flutter
-      ref: main   # use the release branch / tag your team ships
 ```
 
 ```dart
