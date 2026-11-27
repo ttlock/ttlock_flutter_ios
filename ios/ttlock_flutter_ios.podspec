@@ -14,8 +14,9 @@ iOS implementation for ttlock_flutter.
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
+  s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.platform = :ios, '12.0'
+  s.platform = :ios, '15.0'
 #   s.vendored_frameworks = "Frameworks/**/*.framework"
   s.dependency 'TTLockOnPremise', '2.2.6'
   # 与 TTLockOnPremise 2.2.6 同 tag。传递 iOSDFULibrary ~> 4.14.0，不另钉。

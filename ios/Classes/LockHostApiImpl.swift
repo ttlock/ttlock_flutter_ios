@@ -1365,27 +1365,25 @@ final class LockHostApiImpl: NSObject, TTLockHostApi {
   func getBluetoothAdvertisingInterval(
     lockData: String, completion: @escaping (Result<Double, Error>) -> Void
   ) {
-    TTLock.getBluetoothAdvertisingInterval(withLockData: lockData) { interval in
-      completion(.success(Double(interval)))
-    } failure: { errorCode, errorMsg in
-      completion(
-        .failure(
-          makeLockApiError(
-            operation: "getBluetoothAdvertisingInterval", error: errorCode, message: errorMsg)))
-    }
+    // TTLockOnPremise 2.2.6 未提供该 API
+    completion(
+      .failure(
+        makeLockApiError(
+          operation: "getBluetoothAdvertisingInterval",
+          error: TTLockError.fail,
+          message: "notImplemented")))
   }
 
   func setBluetoothAdvertisingInterval(
     interval: Double, lockData: String, completion: @escaping (Result<Void, Error>) -> Void
   ) {
-    TTLock.setBluetoothAdvertisingInterval(Float(interval), lockData: lockData) {
-      completion(.success(()))
-    } failure: { errorCode, errorMsg in
-      completion(
-        .failure(
-          makeLockApiError(
-            operation: "setBluetoothAdvertisingInterval", error: errorCode, message: errorMsg)))
-    }
+    // TTLockOnPremise 2.2.6 未提供该 API
+    completion(
+      .failure(
+        makeLockApiError(
+          operation: "setBluetoothAdvertisingInterval",
+          error: TTLockError.fail,
+          message: "notImplemented")))
   }
 
   func getPassageModes(

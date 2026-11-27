@@ -14,8 +14,7 @@ enum UpgradeHardware {
   case keypad
 }
 
-/// premise 的 DFU 入口。模块别名是 `TTLockDFUSDK`，锁类名仍是 `TTLockDFUOnPremise`。
-/// 网关类名是 `TTGatewayDFU`。水电表 / 键盘走 `TTDeviceDFU`（仅固件包）。
+/// premise 的 DFU 入口。模块别名是 `TTLockDFUSDK`，经 `TTDfuBridge` 调用原生 SDK。
 enum UpgradeDfuFacade {
   static func startLock(
     firmwarePackage: String,
@@ -24,7 +23,7 @@ enum UpgradeDfuFacade {
     onSuccess: @escaping () -> Void,
     onError: @escaping (TTLockUpgradeError, String?) -> Void
   ) {
-    TTLockDFUOnPremise.shareInstance().startDfu(
+    TTDfuBridge.startLockDfu(
       withFirmwarePackage: firmwarePackage,
       lockData: lockData,
       successBlock: { operation, progress in
@@ -37,7 +36,7 @@ enum UpgradeDfuFacade {
   }
 
   static func stopLock() {
-    TTLockDFUOnPremise.shareInstance().endUpgrade()
+    TTDfuBridge.endLockUpgrade()
   }
 
   static func startGatewayPackage(
@@ -47,7 +46,7 @@ enum UpgradeDfuFacade {
     onSuccess: @escaping () -> Void,
     onError: @escaping (TTLockUpgradeError, String?) -> Void
   ) {
-    TTGatewayDFU.shareInstance().start(
+    TTDfuBridge.startGatewayDfu(
       withFirmwarePackage: firmwarePackage,
       gatewayMac: gatewayMac,
       successBlock: { operation, progress in
@@ -60,7 +59,7 @@ enum UpgradeDfuFacade {
   }
 
   static func stopGateway() {
-    TTGatewayDFU.shareInstance().endUpgrade()
+    TTDfuBridge.endGatewayUpgrade()
   }
 
   /// premise `TTDeviceDFUModel` 无 `deviceId` 字段，也无网络 DFU 重载；仅固件包。
@@ -84,7 +83,7 @@ enum UpgradeDfuFacade {
     )
     switch mode {
     case .package(let firmwarePackage):
-      TTDeviceDFU.shareInstance().startDfu(
+      TTDfuBridge.startDeviceDfu(
         withFirmwarePackage: firmwarePackage,
         deviceModel: model,
         successBlock: { operation, progress in
@@ -98,7 +97,7 @@ enum UpgradeDfuFacade {
   }
 
   static func stopDevice() {
-    TTDeviceDFU.shareInstance().endUpgrade()
+    TTDfuBridge.endDeviceUpgrade()
   }
 
   /// 锁升级成功后刷新 lockData。`TTLockOnPremise` 2.2.6 走 `getLockSystemInfoWithLockData`。

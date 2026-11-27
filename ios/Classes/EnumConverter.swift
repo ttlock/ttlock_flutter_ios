@@ -483,7 +483,7 @@ func featureValueConvert(_ lockFunction: TTLockFunction) -> TTLockFeatureValue? 
     return TTLockFeatureValue.powerSaverSupportWifi
   case .bluetoothAdvertisingSetting:
     // id: 97
-    return TTLockFeatureValue.bluetoothAdvertisingInterval
+    return TTLockFeatureValue.advertisingInterval
   case .workingMode:
     // id: 98
     return TTLockFeatureValue.workingMode
@@ -535,7 +535,7 @@ func featureValueConvert(_ lockFunction: TTLockFunction) -> TTLockFeatureValue? 
     return TTLockFeatureValue.semiAutomaticModeControl
   case .supportSetUserAttributes:
     // id: 120
-    return TTLockFeatureValue.setOpenTypeAttributes
+    return TTLockFeatureValue.setUserAttributes
   case .motorDriveBoardFirmwareVersion:
     // id: 122
     return nil
