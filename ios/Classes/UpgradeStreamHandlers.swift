@@ -1,4 +1,5 @@
 import Foundation
+import Flutter
 
 private let upgradeContext = EventContextStore.shared
 private let upgradeBusyMessage = "upgrade already in progress"
@@ -224,7 +225,7 @@ private final class UpgradeChannelBridge {
       } else {
         reply(nil)
       }
-    }
+    })
   }
 }
 

@@ -15,7 +15,7 @@ iOS implementation for ttlock_flutter.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.platform = :ios, '12.0'
+  s.platform = :ios, '15.0'
 #   s.vendored_frameworks = "Frameworks/**/*.framework"
   s.dependency 'TTLock', '3.6.16'
   # 与 TTLock 3.6.16 同仓 tag 内的 DFU 版本。传递 iOSDFULibrary ~> 4.14.0，不另钉。
