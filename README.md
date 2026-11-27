@@ -2,7 +2,7 @@
 
 [中文文档](./README_ZH.md)
 
-iOS platform implementation of the [`ttlock_flutter`](https://github.com/ttlock/ttlock_flutter) federated plugin. Host apps normally depend on **`ttlock_flutter`**, which selects this package on iOS. Use this README when you maintain the iOS submodule, customize CocoaPods, or debug native SDK linkage.
+iOS platform implementation of the [`ttlock_flutter`](https://github.com/ttlock/ttlock_flutter_plus) federated plugin. Host apps normally depend on **`ttlock_flutter`**, which selects this package on iOS. Use this README when you maintain the iOS submodule, customize CocoaPods, or debug native SDK linkage.
 
 > Current package version: **0.0.3** (see `pubspec.yaml`).  
 > This branch (**`premise`**) depends on the **on-premise** CocoaPod **`TTLockOnPremise`**.
@@ -19,7 +19,7 @@ Dart-facing APIs live in the parent plugin (`package:ttlock_flutter/ttlock.dart`
 
 ## Firmware upgrade
 
-Depends on CocoaPod **`TTLockDFUOnPremise`** in addition to `TTLockOnPremise`. On-premise (`premise`) compiles **lock firmware-package** and **gateway firmware-package** DFU only. See the parent [README](https://github.com/ttlock/ttlock_flutter/blob/mix/README.md) «Firmware upgrade».
+Depends on CocoaPod **`TTLockDFUOnPremise`** in addition to `TTLockOnPremise`. On-premise (`premise`) compiles **lock firmware-package** and **gateway firmware-package** DFU only. See the parent [README](https://github.com/ttlock/ttlock_flutter_plus/blob/main/README.md) «Firmware upgrade».
 
 ## Native SDK (this branch: on-premise)
 
@@ -79,9 +79,8 @@ Most apps should depend on the parent package, not this package alone:
 dependencies:
   ttlock_flutter:
     git:
-      url: https://github.com/ttlock/ttlock_flutter.git
+      url: https://github.com/ttlock/ttlock_flutter_plus.git
       path: ttlock_flutter
-      ref: mix   # use the release branch / tag your team ships
 ```
 
 Ensure the parent checkout / submodule pins this package’s **`premise`** branch when you ship on-premise.
@@ -90,10 +89,10 @@ Ensure the parent checkout / submodule pins this package’s **`premise`** branc
 import 'package:ttlock_flutter/ttlock.dart';
 ```
 
-See the parent [README](https://github.com/ttlock/ttlock_flutter/blob/mix/README.md) for features, BleGuard, and API overview.
+See the parent [README](https://github.com/ttlock/ttlock_flutter_plus/blob/main/README.md) for features, BleGuard, and API overview.
 
 ## Resources
 
-- Parent plugin: <https://github.com/ttlock/ttlock_flutter>
+- Parent plugin: <https://github.com/ttlock/ttlock_flutter_plus>
 - This package homepage (pubspec): same parent repo
 - On-premise native SDK: resolve `TTLockOnPremise` from your TTLock on-premise CocoaPods delivery
