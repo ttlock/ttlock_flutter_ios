@@ -2,7 +2,7 @@
 
 [English](./README.md)
 
-[`ttlock_flutter`](https://github.com/ttlock/ttlock_flutter) 联邦插件的 **iOS 平台实现**。宿主 App 通常只依赖 **`ttlock_flutter`**，由它在 iOS 上选用本包。当你维护 iOS 子模块、自定义 CocoaPods，或排查原生 SDK 链接问题时，请以本文为准。
+[`ttlock_flutter`](https://github.com/ttlock/ttlock_flutter_plus) 联邦插件的 **iOS 平台实现**。宿主 App 通常只依赖 **`ttlock_flutter`**，由它在 iOS 上选用本包。当你维护 iOS 子模块、自定义 CocoaPods，或排查原生 SDK 链接问题时，请以本文为准。
 
 > 当前包版本：**0.0.3**（以 `pubspec.yaml` 为准）。  
 > 本分支（**`main`**）依赖 **在线 / 云端** CocoaPod **`TTLock`**。
@@ -19,7 +19,7 @@ App  →  ttlock_flutter（Dart API）
 
 ## 固件升级
 
-除 `TTLock` 外另依赖 CocoaPod **`TTLockDFU`**，将 `TTUpgradeHostApi` 与各升级 EventChannel 接到 `TTLockDFU`。在线版（`main`）支持锁 / 网关（网络 + 固件包）/ 水表 / 电表 / 键盘升级。约定见父仓库 [README_ZH](https://github.com/ttlock/ttlock_flutter/blob/mix/README_ZH.md)「固件升级」。
+除 `TTLock` 外另依赖 CocoaPod **`TTLockDFU`**，将 `TTUpgradeHostApi` 与各升级 EventChannel 接到 `TTLockDFU`。在线版（`main`）支持锁 / 网关（网络 + 固件包）/ 水表 / 电表 / 键盘升级。约定见父仓库 [README_ZH](https://github.com/ttlock/ttlock_flutter_plus/blob/main/README_ZH.md)「固件升级」。
 
 ## 原生 SDK（本分支：在线版）
 
@@ -79,19 +79,19 @@ cd ios && pod install
 dependencies:
   ttlock_flutter:
     git:
-      url: https://github.com/ttlock/ttlock_flutter.git
+      url: https://github.com/ttlock/ttlock_flutter_plus.git
       path: ttlock_flutter
-      ref: mix   # 按团队发布分支 / tag 调整
+      ref: main   # 按团队发布分支 / tag 调整
 ```
 
 ```dart
 import 'package:ttlock_flutter/ttlock.dart';
 ```
 
-能力一览、BleGuard、API 总览见父仓库 [README_ZH](https://github.com/ttlock/ttlock_flutter/blob/mix/README_ZH.md)。
+能力一览、BleGuard、API 总览见父仓库 [README_ZH](https://github.com/ttlock/ttlock_flutter_plus/blob/main/README_ZH.md)。
 
 ## 相关资源
 
-- 父插件仓库：<https://github.com/ttlock/ttlock_flutter>
+- 父插件仓库：<https://github.com/ttlock/ttlock_flutter_plus>
 - 本包 homepage（pubspec）：同上父仓库
 - 云端 REST 接口见开放平台 `cloud/` 目录（锁初始化、更新锁数据等需与 BLE 操作配合）

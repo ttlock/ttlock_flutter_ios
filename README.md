@@ -2,7 +2,7 @@
 
 [中文文档](./README_ZH.md)
 
-iOS platform implementation of the [`ttlock_flutter`](https://github.com/ttlock/ttlock_flutter) federated plugin. Host apps normally depend on **`ttlock_flutter`**, which selects this package on iOS. Use this README when you maintain the iOS submodule, customize CocoaPods, or debug native SDK linkage.
+iOS platform implementation of the [`ttlock_flutter`](https://github.com/ttlock/ttlock_flutter_plus) federated plugin. Host apps normally depend on **`ttlock_flutter`**, which selects this package on iOS. Use this README when you maintain the iOS submodule, customize CocoaPods, or debug native SDK linkage.
 
 > Current package version: **0.0.3** (see `pubspec.yaml`).  
 > This branch (**`main`**) depends on the **online / cloud** CocoaPod **`TTLock`**.
@@ -19,7 +19,7 @@ Dart-facing APIs live in the parent plugin (`package:ttlock_flutter/ttlock.dart`
 
 ## Firmware upgrade
 
-Depends on CocoaPod **`TTLockDFU`** in addition to `TTLock`. Wires `TTUpgradeHostApi` + upgrade EventChannels to `TTLockDFU`. Online (`main`) supports lock / gateway (network + package) / water meter / electric meter / keypad upgrade. See the parent [README](https://github.com/ttlock/ttlock_flutter/blob/mix/README.md) «Firmware upgrade».
+Depends on CocoaPod **`TTLockDFU`** in addition to `TTLock`. Wires `TTUpgradeHostApi` + upgrade EventChannels to `TTLockDFU`. Online (`main`) supports lock / gateway (network + package) / water meter / electric meter / keypad upgrade. See the parent [README](https://github.com/ttlock/ttlock_flutter_plus/blob/main/README.md) «Firmware upgrade».
 
 ## Native SDK (this branch: online)
 
@@ -79,19 +79,19 @@ Most apps should depend on the parent package, not this package alone:
 dependencies:
   ttlock_flutter:
     git:
-      url: https://github.com/ttlock/ttlock_flutter.git
+      url: https://github.com/ttlock/ttlock_flutter_plus.git
       path: ttlock_flutter
-      ref: mix   # use the release branch / tag your team ships
+      ref: main   # use the release branch / tag your team ships
 ```
 
 ```dart
 import 'package:ttlock_flutter/ttlock.dart';
 ```
 
-See the parent [README](https://github.com/ttlock/ttlock_flutter/blob/mix/README.md) for features, BleGuard, and API overview.
+See the parent [README](https://github.com/ttlock/ttlock_flutter_plus/blob/main/README.md) for features, BleGuard, and API overview.
 
 ## Resources
 
-- Parent plugin: <https://github.com/ttlock/ttlock_flutter>
+- Parent plugin: <https://github.com/ttlock/ttlock_flutter_plus>
 - This package homepage (pubspec): same parent repo
 - Cloud REST APIs: open-platform `cloud/` docs (lock init / lockData updates must pair with BLE operations)
